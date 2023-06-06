@@ -4,6 +4,11 @@ FROM gradle:7.6.1-jdk11 AS build
 # 소스코드를 복사할 작업 디렉토리를 생성
 WORKDIR /app
 
+# 라이브러리 설치에 필요한 파일만 복사
+COPY build.gradle settings.gradle ./
+
+RUN gradle dependencies --no-daemon
+
 # 호스트 머신의 소스코드를 작업 디렉토리로 복사
 COPY . /app
 

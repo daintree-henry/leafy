@@ -3,11 +3,16 @@ FROM node:14 AS build
 
 WORKDIR /app
 
-# 소스코드 복사
-COPY . /app
+# 라이브러리 설치에 필요한 파일만 복사
+COPY package.json .
+COPY package-lock.json .
 
 # 라이브러리 설치
 RUN npm ci
+
+# 소스코드 복사
+COPY . /app
+
 # 소스코드 빌드
 RUN npm run build
 
