@@ -18,6 +18,9 @@ RUN gradle clean build --no-daemon
 # 런타임 이미지로 OpenJDK 8 JRE-alpine 지정
 FROM openjdk:11-jre-slim
 
+# JVM 튜닝을 위한 환경 변수 추가
+ENV JAVA_OPTS="-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
+
 # 애플리케이션을 실행할 작업 디렉토리를 생성
 WORKDIR /app
 
