@@ -2,7 +2,7 @@ FROM postgres:13
 
 COPY ./init/init.sql /docker-entrypoint-initdb.d/
 
-COPY ./config/postgresql.conf /etc/postgresql/postgresql.conf
+COPY ./config/postgresql.conf /var/lib/postgresql/data/postgresql.conf
 
 ENV POSTGRES_USER=myuser
 ENV POSTGRES_PASSWORD=mypassword
