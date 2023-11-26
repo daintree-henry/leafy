@@ -1,0 +1,17 @@
+{
+        "name": "Leafy-frontend project based node.js",
+        "dockerFile": "Dockerfile",
+        "forwardPorts": [80],
+        "customizations": {
+            "vscode": {
+                "settings": {},
+                "extensions": [
+                    "dbaeumer.vscode-eslint"
+                ]
+                
+            }
+        },
+        "postCreateCommand": "npm install",
+        "remoteUser": "node"
+    }
+    
