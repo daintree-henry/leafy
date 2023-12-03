@@ -1,4 +1,4 @@
-# 빌드 스테이지
+# 빌드 이미지로 node:14 지정 
 FROM node:14 AS build
 
 WORKDIR /app
@@ -19,15 +19,13 @@ RUN npm run build
 # 프로덕션 스테이지
 FROM nginx:1.21.4-alpine 
 COPY nginx.conf /etc/nginx/conf.d/default.conf.template
-ENV BACKEND_HOST leafy-backend
+ENV BACKEND_HOST leafy
 ENV BACKEND_PORT 8080
-
-COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
-# 빌드 스테이지에서 생성된 빌드 결과물을 복사
+# 빌드 이미지에서 생성된 dist 폴더를 nginx 이미지로 복사
 COPY --from=build /app/dist /usr/share/nginx/html
 
 EXPOSE 80
