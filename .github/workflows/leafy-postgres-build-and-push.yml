@@ -1,0 +1,43 @@
+name: Postgres Build and Push
+
+on:
+  push:
+    branches:
+      - 08-cicd  
+      # 08-cicd 브랜치에 push될 때 워크플로우가 실행됩니다.
+    paths:
+      - 'leafy-postgres/**'
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest  
+    # 가장 최신의 Ubuntu 러너를 사용합니다.
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2  
+      # 현재 리포지토리를 체크아웃합니다.
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1  
+      # Docker Buildx를 설정합니다.
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}  
+        # GitHub Secret에서 Docker Hub 사용자 이름을 가져옵니다.
+        password: ${{ secrets.DOCKERHUB_TOKEN }}     
+        # GitHub Secret에서 Docker Hub 액세스 토큰을 가져옵니다.
+
+    - name: Build and Push
+      uses: docker/build-push-action@v2
+      with:
+        context: ./leafy-postgresql  
+        # Dockerfile이 있는 위치입니다.
+        file: ./leafy-postgresql/Dockerfile  
+        # Dockerfile의 경로입니다.
+        push: true  
+        # 이미지를 레지스트리에 푸시합니다.
+        tags: devwikirepo/leafy-postgres:${{ env.SHORT_SHA }}
+
