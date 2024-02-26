@@ -39,4 +39,4 @@ jobs:
         # Dockerfile의 경로입니다.
         push: true  # 이미지를 레지스트리에 푸시합니다.
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/leafy-backend:${{ github.sha }}  
-
+        platforms: linux/amd64, linux/arm64
