@@ -1,8 +1,9 @@
 version: '3'
 services:
   leafy-postgres:
-    build: ./leafy-postgresql
-    image: leafy-postgres:5.0.0-compose
+    # build: ./leafy-postgresql #제거
+    # image: leafy-postgres:5.0.0-compose # 도커허브계정이름/postgres 이름:tag
+    image: lunghyun/leafy-postgres:41e8d0d1eeb73e1b2ff2372fdc1746e8e1f6df00
     volumes:
       - mydata:/var/lib/postgresql/data
     deploy:
@@ -17,7 +18,7 @@ services:
     image: leafy-backend:5.0.0-compose
     environment:
       - DB_URL=leafy-postgres
-    depends_on:
+    depends_on: # 해당 컨테이너가 실행되기 전까지 기다림
       - leafy-postgres
     deploy:
       resources:
@@ -27,8 +28,8 @@ services:
     restart: on-failure
       
   leafy-front:
-    build: ./leafy-frontend
-    image: leafy-front:5.0.0-compose
+    # build: ./leafy-frontend # 제거
+    image: lunghyun/leafy-frontend:30ecd086b7d000225d837f6f85680cdfe634df55
     environment:
       - BACKEND_HOST=leafy-backend
     ports:

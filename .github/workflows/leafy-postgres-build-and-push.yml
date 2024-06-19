@@ -6,7 +6,7 @@ on:
       - 08-cicd  
       # 08-cicd 브랜치에 push될 때 워크플로우가 실행됩니다.
     paths:
-      - 'leafy-postgres/**'
+      - 'leafy-postgresql/**'
 
 jobs:
   build-and-push:
