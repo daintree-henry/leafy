@@ -10,7 +10,7 @@
       </div>
       <button type="submit">로그인</button>
     </form>
-    <button type="button" class="demo-login" @click="loginAsDemo">실습 계정(John)으로 바로 로그인</button>
+    <button type="button" class="demo-login" @click="loginAsDemo">실습 계정으로 바로 로그인</button>
   </div>
 </template>
 
