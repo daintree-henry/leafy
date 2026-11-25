@@ -1,8 +1,8 @@
 <template>
   <v-dialog v-model="isDialogOpen" persistent max-width="600px">
-    <v-card>
+    <v-card rounded="xl" class="pa-2">
       <v-card-title class="text-center">
-        <h3 style="margin-top: 20px;">식물 추가</h3>
+        <h3 class="add-title">식물 추가</h3>
       </v-card-title>
       <v-card-text>
         <v-container>
@@ -11,28 +11,28 @@
               <v-col cols="6">
                 <v-text-field
                   v-model="plantName"
-                  label="식물명"
+                  label="식물명" variant="outlined" color="#2F6B4F"
                   required
                 ></v-text-field>
               </v-col>
               <v-col cols="6">
                 <v-text-field
                   v-model="plantType"
-                  label="식물 타입"
+                  label="식물 타입" variant="outlined" color="#2F6B4F"
                   required
                 ></v-text-field>
               </v-col>
               <v-col cols="12">
                 <v-textarea
                   v-model="plantDesc"
-                  label="식물 상세 설명"
+                  label="식물 상세 설명" variant="outlined" color="#2F6B4F"
                   required
                 ></v-textarea>
               </v-col>
               <v-col cols="12">
                 <v-text-field
                   v-model="imageUrl"
-                  label="이미지 URL"
+                  label="이미지 URL" variant="outlined" color="#2F6B4F"
                   required
                 ></v-text-field>
               </v-col>
@@ -42,7 +42,7 @@
                   :min="10"
                   :max="40"
                   step="0.1"
-                  label="온도 범위"
+                  label="온도 범위" color="#2F6B4F"
                   thumb-label
                   tick-labels
                 ></v-range-slider>
@@ -53,7 +53,7 @@
                   :min="30"
                   :max="60"
                   step="1"
-                  label="습도 범위"
+                  label="습도 범위" color="#2F6B4F"
                   thumb-label
                   tick-labels
                 ></v-range-slider>
@@ -61,7 +61,7 @@
               <v-col cols="12">
                 <v-text-field
                   v-model="wateringInterval"
-                  label="물 주기(일)"
+                  label="물 주기(일)" variant="outlined" color="#2F6B4F"
                   type="number"
                   required
                 ></v-text-field>
@@ -73,10 +73,10 @@
       
       <v-row align="center" justify="center">
         <v-col cols="5">
-          <v-btn block size="large" color="#999999" @click="close" >취소</v-btn>
+          <v-btn block size="large" variant="text" @click="close" >취소</v-btn>
         </v-col>
         <v-col cols="5">
-          <v-btn block size="large" color="#556B2F" @click="addPlant" >추가</v-btn>  
+          <v-btn block size="large" variant="flat" color="#2F6B4F" @click="addPlant" >추가</v-btn>  
         </v-col>
       </v-row>
       <v-card-actions>
