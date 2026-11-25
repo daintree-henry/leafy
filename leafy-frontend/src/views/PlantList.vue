@@ -1,16 +1,28 @@
 <template>
-  <div class="container">
-    <div class="plant-list">
-      <div v-for="plant in plants" :key="plant.plantId" class="plant-item" @click="openPlantDetailModal(plant.plantId)">
-        <img :src="plant.imageUrl" :alt="plant.plantName" class="plant-image">
-        <div class="plant-details">
-          <h2 class="plant-name">{{ plant.plantName }}</h2>
-          <p class="plant-type">{{ plant.plantType }}</p>
-          <p class="plant-desc">{{ plant.plantDesc }}</p>
+  <div class="page">
+    <section class="section">
+      <div class="section-head">
+        <h3>전체 식물</h3>
+        <span class="count">{{ plants.length }}</span>
+        <div class="actions">
+          <button class="btn-primary add-plant-button" @click="openPlantAddModal"><v-icon size="18">mdi-plus</v-icon>식물 추가</button>
         </div>
       </div>
-    </div>
-    <button class="add-plant-button" @click="openPlantAddModal">식물 추가</button>
+      <div class="card-grid">
+        <article v-for="plant in plants" :key="plant.plantId" class="leafy-card clickable plant-item" @click="openPlantDetailModal(plant.plantId)">
+          <div class="thumb">
+            <img :src="plant.imageUrl" :alt="plant.plantName" class="plant-image">
+          </div>
+          <div class="plant-details">
+            <div class="title-row">
+              <h4 class="plant-name">{{ plant.plantName }}</h4>
+              <span class="chip chip-green plant-type">{{ plant.plantType }}</span>
+            </div>
+            <p class="plant-desc">{{ plant.plantDesc }}</p>
+          </div>
+        </article>
+      </div>
+    </section>
 
     <PlantAddModal :isOpen="showPlantAddModal" @update:isOpen="showPlantAddModal = $event" @added-plant="fetchPlants" />
     <PlantDetailModal :deleteButton="true" :isOpen="showPlantDetailModal" @update:isOpen="showPlantDetailModal = $event" :plantId="selectedPlantId"  @removed-plant="fetchPlants"  />
@@ -62,66 +74,43 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  max-width: 1200px;
-  margin: 40px auto;
-}
-
-.title {
-  font-size: 2.5rem;
-  margin-top: 2rem;
-  margin-bottom: 1.5rem;
-}
-
-.plant-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  grid-gap: 2rem;
-}
-
-.plant-item {
-  border: 1px solid #eee;
-  border-radius: 8px;
-  overflow: hidden;
-  cursor: pointer;
+.thumb {
+  aspect-ratio: 4 / 3;
+  background-color: var(--leafy-green-soft);
 }
 
 .plant-image {
   width: 100%;
-  height: 200px;
+  height: 100%;
   object-fit: cover;
+  display: block;
 }
 
 .plant-details {
-  padding: 1rem;
+  padding: 14px 16px 18px;
+}
+
+.title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
 }
 
 .plant-name {
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 800;
 }
 
-.plant-type {
-  font-size: 1.2rem;
-  color: #777;
-}
-
-.add-plant-button {
-  display: block;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-  padding: 0.7rem;
-  font-size: 1rem;
-  font-weight: bold;
-  color: white;
-  background-color: #38a169;
-  border: none;
-  border-radius: 0.25rem;
-  cursor: pointer;
-  
-  width: 60%; 
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center; 
+.plant-desc {
+  margin: 8px 0 0;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--leafy-muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 </style>
