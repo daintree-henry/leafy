@@ -1,13 +1,14 @@
 <template>
   <div class="user-plants">
-    <h3>내 식물 리스트</h3>
     <v-select
       :items="userPlantList"
       item-title="plantNicknameWithPlantName"
       item-value="userPlantId"
       label="식물 선택"
       v-model="userPlantId"
-      dense
+      variant="outlined"
+      color="#2F6B4F"
+      density="comfortable"
       @input="onSelectChange"
     ></v-select>
   </div>
@@ -61,20 +62,12 @@ export default {
 
     return { userPlantList, userPlantId, onSelectChange };
   },
-  
+
 };
 </script>
 
 <style scoped>
 .user-plants {
-  padding: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-bottom: 1rem;
-}
-
-h3 {
-  margin-top: 0;
-  margin-bottom: 1rem;
+  margin-bottom: 4px;
 }
 </style>
