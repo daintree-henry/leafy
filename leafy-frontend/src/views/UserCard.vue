@@ -1,26 +1,33 @@
 <template>
-  <div class="user-container">
-    <div class="user-card">
-      <div class="user-card__header">
-        <h3>사용자 정보</h3>
-      </div>
-      <div class="user-card__content">
-        <p><strong>이름:</strong> {{ currentUser.name }}</p>
-        <p><strong>이메일:</strong> {{ currentUser.email }}</p>
-        <p><strong>성별:</strong> {{ currentUser.gender }}</p>
-        <v-btn class="user-edit-button" @click="showPasswordModal" style="width: 100%">정보 수정</v-btn>
+  <div class="page">
+    <div class="user-container">
+      <div class="leafy-card user-card">
+        <div class="user-card__header">
+          <div class="avatar">{{ currentUser.name ? currentUser.name.charAt(0) : '' }}</div>
+          <div>
+            <h3>{{ currentUser.name }}</h3>
+            <p class="email">{{ currentUser.email }}</p>
+          </div>
+        </div>
+        <dl class="user-card__content">
+          <div class="row"><dt>이름</dt><dd>{{ currentUser.name }}</dd></div>
+          <div class="row"><dt>이메일</dt><dd>{{ currentUser.email }}</dd></div>
+          <div class="row"><dt>성별</dt><dd>{{ genderLabel }}</dd></div>
+          <div class="row" v-if="currentUser.birthDate"><dt>생년월일</dt><dd>{{ formatDate(currentUser.birthDate) }}</dd></div>
+        </dl>
+        <button class="btn-primary user-edit-button" @click="showPasswordModal"><v-icon size="18">mdi-account-edit-outline</v-icon>정보 수정</button>
       </div>
     </div>
-    <v-dialog v-model="passwordModal" max-width="290">
-      <v-card>
-        <v-card-title class="headline">비밀번호를 입력하세요.</v-card-title>
+    <v-dialog v-model="passwordModal" max-width="360">
+      <v-card rounded="lg" class="pa-2">
+        <v-card-title class="dialog-title">비밀번호를 입력하세요.</v-card-title>
         <v-card-text>
-          <v-text-field v-model="password" label="비밀번호" type="password"></v-text-field>
+          <v-text-field v-model="password" label="비밀번호" type="password" variant="outlined" color="#2F6B4F" @keyup.enter="editUser"></v-text-field>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="green darken-1" text @click="passwordModal = false">취소</v-btn>
-          <v-btn color="green darken-1" text @click="editUser">확인</v-btn>
+          <v-btn variant="text" @click="passwordModal = false">취소</v-btn>
+          <v-btn color="#2F6B4F" variant="flat" @click="editUser">확인</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -32,6 +39,7 @@ import { reactive, toRefs, computed } from 'vue';
 import api from '@/api/api';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
+import { formatDate } from '@/utils/date';
 
 
 export default {
@@ -45,8 +53,14 @@ export default {
       passwordModal: false,
       password: '',
     });
-    
+
     const user = computed(() => store.state.user);
+
+    const genderLabel = computed(() => {
+      if (state.currentUser.gender === 'M') return '남성';
+      if (state.currentUser.gender === 'F') return '여성';
+      return state.currentUser.gender || '';
+    });
 
     const fetchUser = async () => {
       const userId = user.value.userId;
@@ -62,7 +76,7 @@ export default {
     const showPasswordModal = () => {
       state.passwordModal = true;
     };
-    
+
     const editUser = async () =>{
       try {
         await api.post('/api/v1/users/login', {
@@ -85,65 +99,90 @@ export default {
 
     fetchUser();
 
-    
+
     return {
       ...toRefs(state),
       user,
+      genderLabel,
       showPasswordModal,
       editUser,
+      formatDate,
     };
   }
 };
 </script>
 
 <style scoped>
-.user-container{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: auto;
+.user-container {
+  max-width: 440px;
+  margin: 0 auto;
 }
 
 .user-card {
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  padding: 16px;
-  width: 300px;
+  padding: 28px;
 }
 
 .user-card__header {
-  background-color: #f5f5f5;
-  border-radius: 4px 4px 0 0;
-  padding: 8px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--leafy-green);
+  background-color: var(--leafy-green-soft);
 }
 
 .user-card__header h3 {
   margin: 0;
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.email {
+  margin: 2px 0 0;
+  color: var(--leafy-muted);
+  font-size: 0.9rem;
 }
 
 .user-card__content {
-  padding-top: 16px;
+  margin: 0 0 24px;
+  border-top: 1px solid var(--leafy-border);
 }
 
-.user-card__content p {
-  margin: 0 0 8px;
+.row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--leafy-border);
+  font-size: 0.95rem;
 }
 
-.user-card__content p:last-child {
-  margin-bottom: 0;
+.row dt {
+  color: var(--leafy-muted);
 }
 
+.row dd {
+  margin: 0;
+  font-weight: 600;
+}
 
 .user-edit-button {
-  margin-top: 2rem;
-  font-size: 1rem;
-  font-weight: bold;
-  color: white;
-  background-color: #8FBC8F;
-  border: none;
-  border-radius: 0.25rem;
-  cursor: pointer;
+  width: 100%;
+  justify-content: center;
+}
+
+.dialog-title {
+  font-size: 1.05rem;
+  font-weight: 800;
 }
 </style>
-  
