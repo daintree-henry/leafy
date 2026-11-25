@@ -10,12 +10,17 @@
       </div>
       <button type="submit">로그인</button>
     </form>
+    <button type="button" class="demo-login" @click="loginAsDemo">실습 계정(John)으로 바로 로그인</button>
   </div>
 </template>
 
 <script>
 import api from '@/api/api';
 import { mapState, mapActions } from "vuex";
+
+// 강의 실습용 계정 (leafy-postgresql/init/init.sql에 들어 있는 사용자)
+const DEMO_EMAIL = 'john123@qmail.com';
+const DEMO_PASSWORD = 'password123';
 
 export default {
   name: "UserLogin",
@@ -40,6 +45,11 @@ export default {
   },
   methods: {
     ...mapActions(["showPopup"]),
+    loginAsDemo() {
+      this.userEmail = DEMO_EMAIL;
+      this.userPassword = DEMO_PASSWORD;
+      this.submitLogin();
+    },
     async submitLogin() {
       try {
         const response = await api.post('/api/v1/users/login', {
@@ -123,5 +133,20 @@ button[type="submit"] {
 }
 button[type="submit"]:hover {
   background-color: #556B2F;
+}
+.demo-login {
+  margin-top: 0.7rem;
+  background: none;
+  border: 1px solid #8FBC8F;
+  color: #556B2F;
+  padding: 0.6rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
+}
+.demo-login:hover {
+  background-color: #F0F7F0;
 }
 </style>
