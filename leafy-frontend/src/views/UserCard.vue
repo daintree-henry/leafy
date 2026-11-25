@@ -16,6 +16,7 @@
           <div class="row" v-if="currentUser.birthDate"><dt>생년월일</dt><dd>{{ formatDate(currentUser.birthDate) }}</dd></div>
         </dl>
         <button class="btn-primary user-edit-button" @click="showPasswordModal"><v-icon size="18">mdi-account-edit-outline</v-icon>정보 수정</button>
+        <button class="logout-button" @click="logout"><v-icon size="18">mdi-logout</v-icon>로그아웃</button>
       </div>
     </div>
     <v-dialog v-model="passwordModal" max-width="360">
@@ -97,6 +98,11 @@ export default {
       state.password = '';
     };
 
+    const logout = () => {
+      store.dispatch('logoutUser');
+      router.push({ name: 'HomePage' });
+    };
+
     fetchUser();
 
 
@@ -106,6 +112,7 @@ export default {
       genderLabel,
       showPasswordModal,
       editUser,
+      logout,
       formatDate,
     };
   }
@@ -179,6 +186,29 @@ export default {
 .user-edit-button {
   width: 100%;
   justify-content: center;
+}
+
+.logout-button {
+  width: 100%;
+  margin-top: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background-color: transparent;
+  color: var(--leafy-muted);
+  border: 1px solid var(--leafy-border);
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.logout-button:hover {
+  color: var(--leafy-text);
+  background-color: var(--leafy-bg);
 }
 
 .dialog-title {
