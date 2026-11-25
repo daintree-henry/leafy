@@ -1,8 +1,10 @@
 <template>
-  <div class="popup" v-if="popup.visible" 
-    :style="{ 'background-color': popupBackgroundColor }">
-    <p>{{ popup.message }}</p>
-  </div>
+  <transition name="toast">
+    <div class="popup" v-if="popup.visible" :class="popup.status === 'error' ? 'is-error' : 'is-success'">
+      <v-icon size="20">{{ popup.status === 'error' ? 'mdi-alert-circle-outline' : 'mdi-check-circle-outline' }}</v-icon>
+      <p>{{ popup.message }}</p>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -12,43 +14,47 @@ export default {
   name: "BasicPopup",
   computed: {
     ...mapState(["popup"]),
-    popupBackgroundColor() {
-      if (this.popup.status === "error") {
-        return "#e74c3c"; // Red color for error status
-      } else {
-        return "#28a745"; // Default green color
-      }
-    }
   },
 }
 </script>
 <style scoped>
-
 .popup {
   position: fixed;
-  bottom: 10px;
+  bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: hsl(150, 100%, 29%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
   color: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  padding: 0px 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  padding: 12px 18px;
   z-index: 9999;
 }
 
-.popup h2 {
-  font-size: 1.2rem;
-  margin-bottom: 10px;
+.popup.is-success {
+  background-color: var(--leafy-green);
+}
+
+.popup.is-error {
+  background-color: #B42318;
 }
 
 .popup p {
-  font-size: 1rem;
-  margin-bottom: 10px;
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
 }
 
-.popup button {
-  font-size: 1rem;
-  padding: 5px 10px;
-  border: none;
+.toast-enter-active,
+.toast-leave-active {
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.toast-enter-from,
+.toast-leave-to {
+  opacity: 0;
+  transform: translate(-50%, 8px);
 }
 </style>
