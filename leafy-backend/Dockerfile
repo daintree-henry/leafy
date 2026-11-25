@@ -16,7 +16,8 @@ COPY . /app
 RUN gradle clean build --no-daemon
 
 # 런타임 이미지로 OpenJDK 11 JRE-slim 지정
-FROM openjdk:11-jre-slim
+# openjdk 이미지가 Docker Hub에서 삭제되어 같은 Java 11 JRE인 eclipse-temurin으로 교체 (2026-11)
+FROM eclipse-temurin:11-jre
 
 # 애플리케이션을 실행할 작업 디렉토리를 생성
 WORKDIR /app
