@@ -135,18 +135,21 @@ button[type="submit"]:hover {
   background-color: #556B2F;
 }
 .demo-login {
-  margin-top: 0.7rem;
-  background: none;
-  border: 1px solid #8FBC8F;
-  color: #556B2F;
-  padding: 0.6rem;
-  font-size: 1rem;
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  background-color: #F28C28;
+  border: none;
+  color: white;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.9rem;
+  font-weight: 600;
   border-radius: 4px;
   cursor: pointer;
-  width: 100%;
-  box-sizing: border-box;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  z-index: 10;
 }
 .demo-login:hover {
-  background-color: #F0F7F0;
+  background-color: #D9731A;
 }
 </style>
