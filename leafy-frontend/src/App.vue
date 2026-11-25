@@ -304,11 +304,20 @@ body {
 
 @media (max-width: 768px) {
   .header-inner {
-    gap: 12px;
-    padding: 0 16px;
+    height: auto;
+    flex-wrap: wrap;
+    gap: 4px 12px;
+    padding: 10px 16px;
   }
 
   .welcome-message {
+    order: 3;
+    width: 100%;
+    margin-left: 0;
+    text-align: left;
+  }
+
+  .welcome-text {
     display: none;
   }
 
