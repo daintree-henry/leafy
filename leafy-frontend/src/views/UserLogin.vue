@@ -1,16 +1,24 @@
 <template>
-  <div class="login-container">
-    <h1>LEAFY</h1>
-    <form @submit.prevent="submitLogin">
-      <div class="form-group">
-        <input type="text" id="userEmail" v-model="userEmail" placeholder="이메일을 입력하세요." required />
-      </div>
-      <div class="form-group">
-        <input type="password" id="userPassword" v-model="userPassword" placeholder="비밀번호를 입력하세요." required />
-      </div>
-      <button type="submit">로그인</button>
-    </form>
+  <div class="login-page">
     <button type="button" class="demo-login" @click="loginAsDemo">실습 계정으로 바로 로그인</button>
+    <div class="login-container">
+      <div class="login-brand">
+        <div class="brand-mark"><v-icon size="30">mdi-leaf</v-icon></div>
+        <h1>LEAFY</h1>
+        <p class="tagline">나의 식물을 기록하고 돌보는 곳</p>
+      </div>
+      <form @submit.prevent="submitLogin">
+        <div class="form-group">
+          <label for="userEmail">이메일</label>
+          <input type="text" id="userEmail" v-model="userEmail" placeholder="이메일을 입력하세요." required />
+        </div>
+        <div class="form-group">
+          <label for="userPassword">비밀번호</label>
+          <input type="password" id="userPassword" v-model="userPassword" placeholder="비밀번호를 입력하세요." required />
+        </div>
+        <button type="submit">로그인</button>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -79,21 +87,53 @@ export default {
 </script>
 
 <style scoped>
-.login-container {
-  max-width: 300px; /* increased width */
-  margin: 0 auto;
-  height: 90vh;
+.login-page {
+  min-height: 100vh;
   display: flex;
+  align-items: center;
   justify-content: center;
-  align-content: stretch;
-  flex-direction: column;
+  padding: 24px;
+  box-sizing: border-box;
+  background: radial-gradient(circle at 20% 10%, #E6F0E8 0%, rgba(230, 240, 232, 0) 45%),
+              radial-gradient(circle at 85% 90%, #EEF4E4 0%, rgba(238, 244, 228, 0) 40%),
+              var(--leafy-bg);
+}
+.login-container {
+  width: 100%;
+  max-width: 380px;
+  background-color: var(--leafy-card);
+  border: 1px solid var(--leafy-border);
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(31, 42, 36, 0.05), 0 16px 40px rgba(31, 42, 36, 0.08);
+  padding: 36px 32px 32px;
+  box-sizing: border-box;
+}
+.login-brand {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.brand-mark {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 12px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--leafy-green);
+  background-color: var(--leafy-green-soft);
 }
 h1 {
+  margin: 0;
   font-weight: 900;
-  font-size: 3rem; /* made the text bolder */
-  margin: 2rem;
-  margin-top: 1rem; /* moved the container 50px up */
-  color: #556B2F;
+  font-size: 2rem;
+  letter-spacing: 0.06em;
+  color: var(--leafy-green);
+}
+.tagline {
+  margin: 6px 0 0;
+  font-size: 0.9rem;
+  color: var(--leafy-muted);
 }
 form {
   display: flex;
@@ -105,34 +145,42 @@ form {
 }
 label {
   display: block;
-  font-weight: bold;
-  margin-bottom: 0.3rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
 }
 input[type="text"],
 input[type="password"] {
-  padding: 0.6rem;
+  padding: 0.75rem 0.85rem;
   font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  border: 1px solid var(--leafy-border);
+  border-radius: 10px;
   width: 100%;
-  box-sizing: border-box; 
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+input[type="text"]:focus,
+input[type="password"]:focus {
+  border-color: var(--leafy-green);
+  box-shadow: 0 0 0 3px rgba(47, 107, 79, 0.15);
 }
 button[type="submit"] {
-  background-color: #8FBC8F;
+  margin-top: 0.5rem;
+  background-color: var(--leafy-green);
   border: none;
   color: white;
-  padding: 0.7rem;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 1.2rem;
-  border-radius: 4px;
+  padding: 0.8rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  border-radius: 10px;
   cursor: pointer;
-  width: 100%; /* adjusted width */
-  box-sizing: border-box; 
+  width: 100%;
+  box-sizing: border-box;
+  transition: background-color 0.15s;
 }
 button[type="submit"]:hover {
-  background-color: #556B2F;
+  background-color: var(--leafy-green-dark);
 }
 .demo-login {
   position: fixed;

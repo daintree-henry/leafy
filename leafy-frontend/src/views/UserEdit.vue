@@ -1,17 +1,16 @@
 <template>
-  <div class="user-edit-container">
-    <h2>사용자 정보 수정</h2>
-    <form @submit.prevent="updateUser">
-      <div>
-        <label for="name">이름:</label>
-        <input id="name" v-model="name" type="text" required />
-      </div>
-      <div>
-        <label for="password">새 비밀번호:</label>
-        <input id="password" v-model="password" type="password" required />
-      </div>
-      <button type="submit">수정하기</button>
-    </form>
+  <div class="page">
+    <div class="leafy-card user-edit-container">
+      <h2>사용자 정보 수정</h2>
+      <form @submit.prevent="updateUser">
+        <v-text-field id="name" v-model="name" label="이름" variant="outlined" color="#2F6B4F" required></v-text-field>
+        <v-text-field id="password" v-model="password" label="새 비밀번호" type="password" variant="outlined" color="#2F6B4F" required></v-text-field>
+        <div class="form-actions">
+          <v-btn variant="text" @click="$router.back()">취소</v-btn>
+          <button type="submit" class="btn-primary">수정하기</button>
+        </div>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -36,7 +35,7 @@ export default {
 
     const updateUser = async () => {
       try {
-        const userId = user.value.userId; 
+        const userId = user.value.userId;
         await api.put(`/api/v1/users/${userId}`, editUser);
         alert('사용자 정보가 성공적으로 수정되었습니다. 다시 로그인 해주세요.');
         store.dispatch('logoutUser');
@@ -57,60 +56,21 @@ export default {
 
 <style scoped>
 .user-edit-container {
+  max-width: 440px;
+  margin: 0 auto;
+  padding: 28px;
+}
+
+h2 {
+  margin: 0 0 20px;
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.form-actions {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 500px;
-  padding: 1rem;
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-form div {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-bottom: 1rem;
-}
-
-form label {
-  font-weight: bold;
-  color: #4c4c4c;
-  margin-bottom: 0.5rem;
-}
-
-form input {
-  flex-basis: 100%;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #f5f5f5;
-  transition: background-color 0.2s;
-}
-
-form input:focus {
-  background-color: #ffffff;
-  outline: none;
-  border-color: #8fbc8f;
-}
-
-button {
-  padding: 0.5rem 1rem;
-  background-color: #8fbc8f;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.2s, box-shadow 0.2s;
-}
-
-button:hover {
-  background-color: #7aab7a;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  gap: 8px;
 }
 </style>
