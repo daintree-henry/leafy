@@ -17,7 +17,7 @@ docker run -d \
   -e REPMGR_NODE_NAME=postgres-primary-0 \
   -e REPMGR_NODE_NETWORK_NAME=postgres-primary-0 \
   -e REPMGR_PORT_NUMBER=5432 \
-  bitnami/postgresql-repmgr:15
+  bitnamilegacy/postgresql-repmgr:15
 
 #3. 스탠바이 노드 실행
 docker run -d \
@@ -35,7 +35,7 @@ docker run -d \
   -e REPMGR_NODE_NAME=postgres-standby-1 \
   -e REPMGR_NODE_NETWORK_NAME=postgres-standby-1 \
   -e REPMGR_PORT_NUMBER=5432 \
-  bitnami/postgresql-repmgr:15
+  bitnamilegacy/postgresql-repmgr:15
 
 # 4. SHELL1, SHELL2 각 컨테이너의 로그 확인
 docker logs -f postgres-primary-0
