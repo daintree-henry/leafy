@@ -1,11 +1,9 @@
 <template>
-  <nav>
-    <ul>
-      <li><router-link to="/">Home</router-link></li>
-      <li><router-link to="/plants">Plants</router-link></li>
-      <li><router-link to="/plantlogs">Diary</router-link></li>
-      <li><router-link to="/setting">Setting</router-link></li>
-    </ul>
+  <nav class="nav">
+    <router-link to="/" exact-active-class="active"><v-icon size="20">mdi-home-outline</v-icon><span>Home</span></router-link>
+    <router-link to="/plants" active-class="active"><v-icon size="20">mdi-sprout-outline</v-icon><span>Plants</span></router-link>
+    <router-link to="/plantlogs" active-class="active"><v-icon size="20">mdi-notebook-outline</v-icon><span>Diary</span></router-link>
+    <router-link to="/setting" active-class="active"><v-icon size="20">mdi-account-circle-outline</v-icon><span>Setting</span></router-link>
   </nav>
 </template>
 <script>
@@ -14,35 +12,43 @@ export default {
 };
 </script>
 <style scoped>
-nav {
-  background-color: #ffffff;
-  border-bottom: 2px solid #eaeaea;
-}
-
-ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.nav {
   display: flex;
-  justify-content: space-around;
-  max-width: 960px;
-  margin: 0 auto;
-}
-
-li {
-  margin: 0;
-  padding: 1rem;
+  gap: 4px;
+  overflow-x: auto;
 }
 
 a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   text-decoration: none;
-  color: #555;
-  font-size: 1.1rem;
-  font-weight: 500;
-  transition: color 0.2s;
+  color: var(--leafy-muted);
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 10px;
+  white-space: nowrap;
+  transition: background-color 0.15s, color 0.15s;
 }
 
 a:hover {
-  color: #222;
+  color: var(--leafy-text);
+  background-color: var(--leafy-bg);
+}
+
+a.active {
+  color: var(--leafy-green);
+  background-color: var(--leafy-green-soft);
+}
+
+@media (max-width: 768px) {
+  a {
+    padding: 8px 10px;
+  }
+
+  a span {
+    display: none;
+  }
 }
 </style>

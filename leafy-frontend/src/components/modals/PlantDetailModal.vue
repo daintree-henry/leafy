@@ -1,60 +1,51 @@
 <template>
-  <v-dialog v-model="isDialogOpen" max-width="600px">
-    <v-card v-if="plantDetail">
-      <v-card-title class="text-center">
-        <h3 style="margin-top: 20px;">식물 정보</h3>
-      </v-card-title>
-      <v-card-text>
-        <v-container>
-          <v-row>
-            <v-col cols="12">
-              <img :src="plantDetail.imageUrl" class="plant-image">
-            </v-col>
-            <v-col cols="12">
-              <h2 class="plant-name">{{ plantDetail.plantName }}</h2>
-              <p class="plant-type">{{ plantDetail.plantType }}</p>
-              <p class="plant-desc">{{ plantDetail.plantDesc }}</p>
-            </v-col>
-            <v-col cols="6">
-              <p class="plant-info-label">온도 범위:</p>
-              <p>{{ plantDetail.temperatureLow }}℃ ~ {{ plantDetail.temperatureHigh }}℃</p>
-            </v-col>
-            <v-col cols="6">
-              <p class="plant-info-label">습도 범위:</p>
-              <p>{{ plantDetail.humidityLow }}% ~ {{ plantDetail.humidityHigh }}%</p>
-            </v-col>
-            <v-col cols="12">
-              <p class="plant-info-label">물 주기:</p>
-              <p>{{ plantDetail.wateringInterval }}일</p>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-card-text>
-      <v-row class="button-group" align="center" justify="center">
-        <v-col :cols="deleteButton ? 4 : 10">
-          <v-btn block color="#999999" @click="close">닫기</v-btn>
-        </v-col>
-        <v-col v-if="deleteButton" cols="4">
-          <v-btn block color="#556B2F" @click="removePlant">삭제</v-btn>
-        </v-col>
-        <v-col v-if="deleteButton" cols="4">
-          <v-btn block color="green" @click="addMyPlant">내 식물 추가</v-btn>
-        </v-col>
-      </v-row>
+  <v-dialog v-model="isDialogOpen" max-width="560px">
+    <v-card v-if="plantDetail" rounded="xl" class="detail-card">
+      <div class="hero">
+        <img :src="plantDetail.imageUrl" :alt="plantDetail.plantName" class="plant-image">
+        <button class="close-btn" title="닫기" @click="close"><v-icon size="22">mdi-close</v-icon></button>
+      </div>
+      <div class="detail-body">
+        <div class="title-row">
+          <h2 class="plant-name">{{ plantDetail.plantName }}</h2>
+          <span class="chip chip-green plant-type">{{ plantDetail.plantType }}</span>
+        </div>
+        <p class="plant-desc">{{ plantDetail.plantDesc }}</p>
+        <div class="info-grid">
+          <div class="info">
+            <v-icon size="20" color="#C2410C">mdi-thermometer</v-icon>
+            <p class="plant-info-label">온도</p>
+            <p class="value">{{ plantDetail.temperatureLow }}~{{ plantDetail.temperatureHigh }}℃</p>
+          </div>
+          <div class="info">
+            <v-icon size="20" color="#2B6CB0">mdi-water-percent</v-icon>
+            <p class="plant-info-label">습도</p>
+            <p class="value">{{ plantDetail.humidityLow }}~{{ plantDetail.humidityHigh }}%</p>
+          </div>
+          <div class="info">
+            <v-icon size="20" color="#2F6B4F">mdi-watering-can-outline</v-icon>
+            <p class="plant-info-label">물 주기</p>
+            <p class="value">{{ plantDetail.wateringInterval }}일</p>
+          </div>
+        </div>
+      </div>
+      <div class="button-group">
+        <v-btn variant="text" @click="close">닫기</v-btn>
+        <v-spacer></v-spacer>
+        <v-btn v-if="deleteButton" variant="outlined" color="#B42318" @click="removePlant">삭제</v-btn>
+        <v-btn v-if="deleteButton" variant="flat" color="#2F6B4F" @click="addMyPlant">내 식물 추가</v-btn>
+      </div>
     </v-card>
-    <v-dialog v-model="nicknameDialogOpen" max-width="400px">
-      <v-card>
-        <v-card-title class="text-center">
-          <h3>식물 이름 입력</h3>
-        </v-card-title>
+    <v-dialog v-model="nicknameDialogOpen" max-width="380px">
+      <v-card rounded="lg" class="pa-2">
+        <v-card-title class="nickname-title">식물 이름 입력</v-card-title>
         <v-card-text>
-          <v-text-field v-model="plantNickname" label="이름" />
+          <v-text-field v-model="plantNickname" label="이름" variant="outlined" color="#2F6B4F" @keyup.enter="submitMyPlant" />
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="green" text @click="nicknameDialogOpen = false">취소</v-btn>
-          <v-btn color="green" text @click="submitMyPlant">확인</v-btn>
-          <v-spacer></v-spacer>
+          <v-btn variant="text" @click="nicknameDialogOpen = false">취소</v-btn>
+          <v-btn variant="flat" color="#2F6B4F" @click="submitMyPlant">확인</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -138,6 +129,13 @@ export default {
       plantNickname.value = '';
     };
 
+    // 바깥을 누르거나 ESC로 닫혀도 부모에게 알려서, 같은 식물을 다시 눌렀을 때 열리게 한다
+    watch(isDialogOpen, (newVal) => {
+      if (!newVal && props.isOpen) {
+        emit('update:isOpen', false);
+      }
+    });
+
     watch(() => props.isOpen, (newVal) => {
       isDialogOpen.value = newVal;
       if (newVal) {
@@ -159,45 +157,83 @@ export default {
   },
 };
 </script>
+
 <style scoped>
-.v-btn{
-  color: white;
+.detail-card {
+  overflow: hidden;
 }
-
-.button-group{
-  margin: 1rem;
+.hero {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background-color: var(--leafy-green-soft);
 }
-
 .plant-image {
-  max-width: 80%;
-  height: auto;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  border-radius: 5px;
-  margin-bottom: 1rem;
   display: block;
-  margin-left: auto;
-  margin-right: auto;
 }
-
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+}
+.detail-body {
+  padding: 20px 24px 8px;
+}
+.title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 .plant-name {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 800;
 }
-
-.plant-type {
-  font-size: 1.25rem;
-  font-weight: normal;
-  margin-bottom: 1rem;
-}
-
 .plant-desc {
-  font-size: 1rem;
-  margin-bottom: 1.5rem;
+  margin: 10px 0 18px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--leafy-muted);
 }
-
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.info {
+  background-color: var(--leafy-bg);
+  border-radius: 12px;
+  padding: 12px;
+  text-align: center;
+}
+.info p {
+  margin: 0;
+}
 .plant-info-label {
-  font-weight: bold;
+  margin-top: 4px !important;
+  font-size: 0.78rem;
+  color: var(--leafy-muted);
 }
-
+.value {
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+.button-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 20px 20px;
+}
+.nickname-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+}
 </style>
