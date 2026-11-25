@@ -79,24 +79,24 @@ INSERT INTO users (name, email, password, gender, birth_date) VALUES
 -- Plants 테이블에 데이터 삽입
 INSERT INTO plants (plant_name, plant_type, plant_desc, image_url, temperature_low, temperature_high, humidity_low, humidity_high, watering_interval)
 VALUES 
-('아이비', '덩굴식물', '아이비는 빠르게 성장하는 인기 있는 덩굴식물로, 공기 정화 능력이 뛰어납니다. 벽이나 거치대에 올려두면 빠르게 뻗어나가 아름다운 모습을 연출합니다.', 'https://leafyapplicationfiles.blob.core.windows.net/plantimages/아이비.jpg', 12, 28, 40, 70, 7),
-('스투키', '선인장', '스투키는 독특한 모양의 선인장으로, 견고하고 건조한 환경에도 잘 적응할 수 있습니다. 물을 적게 주어도 건강하게 자라며 관리가 쉽습니다.', 'https://leafyapplicationfiles.blob.core.windows.net/plantimages/스투키.jpg', 10, 30, 10, 50, 21),
-('로즈마리', '허브', '로즈마리는 향긋한 향기를 가진 허브로, 요리에 활용되기도 합니다. 건조한 환경에도 잘 적응하며, 햇빛을 좋아하는 식물입니다.', 'https://leafyapplicationfiles.blob.core.windows.net/plantimages/로즈마리.jpg', 10, 30, 30, 50, 14),
-('자스민', '꽃', '자스민은 아름다운 꽃과 달콤한 향기로 사랑받는 식물입니다. 화분이나 정원에서 재배할 수 있으며, 온화한 기후를 선호합니다.', 'https://leafyapplicationfiles.blob.core.windows.net/plantimages/자스민.jpg', 15, 30, 40, 70, 7),
-('스파티필럼', '실내식물', '스파티필럼은 큰 잎과 화이트 꽃이 특징인 실내 장식용 식물로, 공기 정화 능력이 높아 인기가 많습니다.', 'https://leafyapplicationfiles.blob.core.windows.net/plantimages/스파티필럼.jpg', 18, 28, 50, 70, 10),
-('스킨답서스', '실내식물', '스킨답서스는 작은 크기의 초록색 잎과 긴 줄기가 특징인 실내 장식용 식물입니다. 건조한 환경과 낮은 빛 조건에서도 잘 자라며, 관리가 쉽습니다.', 'https://leafyapplicationfiles.blob.core.windows.net/plantimages/스킨답서스.jpg', 15, 30, 30, 50, 10),
-('페퍼민트', '허브', '페퍼민트는 상쾌한 향기를 가진 허브로, 차나 요리에 활용되기도 합니다. 물이 잘 공급되는 환경을 선호하며, 햇빛을 좋아하는 식물입니다.', 'https://leafyapplicationfiles.blob.core.windows.net/plantimages/페퍼민트.jpg', 15, 28, 40, 60, 7),
-('산세베리아', '실내식물', '산세베리아는 긴 검은 잎이 특징인 실내 장식용 식물로, 공기 정화 능력이 뛰어납니다. 건조한 환경과 낮은 빛 조건에서도 잘 자라며, 관리가 쉽습니다.', 'https://leafyapplicationfiles.blob.core.windows.net/plantimages/산세베리아.jpg', 15, 30, 20, 50, 21),
-('식물성이끼', '이끼', '식물성이끼는 물에 잘 적응한 식물로, 습한 환경에서 자라는데 적합합니다. 실내 정원이나 수초 양식에서 인기가 많으며, 공기 정화에도 도움이 됩니다.', 'https://leafyapplicationfiles.blob.core.windows.net/plantimages/식물성이끼.jpg', 10, 25, 70, 100, 5),
-('올리브', '나무', '올리브는 과실과 나무로 인기가 있는 식물로, 지중해 기후를 선호합니다. 정원이나 화분에서 재배할 수 있으며, 올리브 오일이나 식재료로 사용됩니다.', 'https://leafyapplicationfiles.blob.core.windows.net/plantimages/올리브.jpg', 10, 30, 30, 50, 14),
-('바질', '허브', '바질은 향긋한 향기를 가진 허브로, 토마토 요리에 자주 사용됩니다. 햇빛을 좋아하며, 다소 습한 환경에서 잘 자라는 식물입니다.', 'https://leafyapplicationfiles.blob.core.windows.net/plantimages/바질.jpg', 18, 30, 40, 60, 7),
-('방울토마토', '채소', '방울토마토는 작고 맛있는 과실이 특징인 채소로, 화분이나 정원에서 쉽게 재배할 수 있습니다. 햇빛을 좋아하며, 꾸준한 물 공급이 필요합니다.', 'https://leafyapplicationfiles.blob.core.windows.net/plantimages/방울토마토.jpg', 18, 30, 40, 70, 5),
-('히야신스', '꽃', '히야신스는 다양한 색상의 아름다운 꽃과 향기로 봄의 대표적인 꽃입니다. 온화한 기후를 선호하며, 화분이나 정원에서 재배할 수 있습니다.', 'https://leafyapplicationfiles.blob.core.windows.net/plantimages/히야신스.jpg', 10, 25, 40, 60, 7),
-('해바라기', '꽃', '해바라기는 거대한 꽃과 높이가 특징인 식물로, 햇빛을 매우 좋아합니다. 정원이나 대형 화분에서 재배할 수 있으며, 씨앗이 간식이나 새의 먹이로 사용됩니다.', 'https://leafyapplicationfiles.blob.core.windows.net/plantimages/해바라기.jpg', 15, 30, 30, 60, 7),
-('아레카야자', '야자', '아레카야자는 열대 실내 장식용 식물로 유명하며, 큰 잎과 세련된 모습으로 인기가 많습니다.', 'https://leafyapplicationfiles.blob.core.windows.net/plantimages/아레카야자.jpg', 18, 27, 40, 60, 7),
-('파키라', '실내식물', '파키라는 견고하고 관리하기 쉬운 식물로, 두꺼운 줄기와 큰 둥글둥글한 잎이 특징입니다.', 'https://leafyapplicationfiles.blob.core.windows.net/plantimages/파키라.jpg', 15, 28, 40, 60, 10),
-('유칼립투스', '나무', '유칼립투스는 상쾌한 향기와 아름다운 잎 모양으로 많은 사랑을 받는 식물입니다. 특히 건조한 공간에서도 잘 자라기 때문에 인기가 높습니다.', 'https://leafyapplicationfiles.blob.core.windows.net/plantimages/유칼립투스.jpg', 10, 25, 30, 55, 14),
-('피나타', '실내식물', '피나타는 높은 곳에서 뻗어 나오는 날렵한 잎으로 장식성이 높은 식물입니다. 거실이나 베란다 같은 잘 통풍되는 장소에 두기 좋습니다.', 'https://leafyapplicationfiles.blob.core.windows.net/plantimages/피나타.jpg', 15, 30, 40, 70, 12);
+('아이비', '덩굴식물', '아이비는 빠르게 성장하는 인기 있는 덩굴식물로, 공기 정화 능력이 뛰어납니다. 벽이나 거치대에 올려두면 빠르게 뻗어나가 아름다운 모습을 연출합니다.', '/images/ivy.jpg', 12, 28, 40, 70, 7),
+('스투키', '선인장', '스투키는 독특한 모양의 선인장으로, 견고하고 건조한 환경에도 잘 적응할 수 있습니다. 물을 적게 주어도 건강하게 자라며 관리가 쉽습니다.', '/images/stuckyi.jpg', 10, 30, 10, 50, 21),
+('로즈마리', '허브', '로즈마리는 향긋한 향기를 가진 허브로, 요리에 활용되기도 합니다. 건조한 환경에도 잘 적응하며, 햇빛을 좋아하는 식물입니다.', '/images/rosemary.jpg', 10, 30, 30, 50, 14),
+('자스민', '꽃', '자스민은 아름다운 꽃과 달콤한 향기로 사랑받는 식물입니다. 화분이나 정원에서 재배할 수 있으며, 온화한 기후를 선호합니다.', '/images/jasmine.jpg', 15, 30, 40, 70, 7),
+('스파티필럼', '실내식물', '스파티필럼은 큰 잎과 화이트 꽃이 특징인 실내 장식용 식물로, 공기 정화 능력이 높아 인기가 많습니다.', '/images/spathiphyllum.jpg', 18, 28, 50, 70, 10),
+('스킨답서스', '실내식물', '스킨답서스는 작은 크기의 초록색 잎과 긴 줄기가 특징인 실내 장식용 식물입니다. 건조한 환경과 낮은 빛 조건에서도 잘 자라며, 관리가 쉽습니다.', '/images/scindapsus.jpg', 15, 30, 30, 50, 10),
+('페퍼민트', '허브', '페퍼민트는 상쾌한 향기를 가진 허브로, 차나 요리에 활용되기도 합니다. 물이 잘 공급되는 환경을 선호하며, 햇빛을 좋아하는 식물입니다.', '/images/peppermint.jpg', 15, 28, 40, 60, 7),
+('산세베리아', '실내식물', '산세베리아는 긴 검은 잎이 특징인 실내 장식용 식물로, 공기 정화 능력이 뛰어납니다. 건조한 환경과 낮은 빛 조건에서도 잘 자라며, 관리가 쉽습니다.', '/images/sansevieria.jpg', 15, 30, 20, 50, 21),
+('식물성이끼', '이끼', '식물성이끼는 물에 잘 적응한 식물로, 습한 환경에서 자라는데 적합합니다. 실내 정원이나 수초 양식에서 인기가 많으며, 공기 정화에도 도움이 됩니다.', '/images/moss.jpg', 10, 25, 70, 100, 5),
+('올리브', '나무', '올리브는 과실과 나무로 인기가 있는 식물로, 지중해 기후를 선호합니다. 정원이나 화분에서 재배할 수 있으며, 올리브 오일이나 식재료로 사용됩니다.', '/images/olive.jpg', 10, 30, 30, 50, 14),
+('바질', '허브', '바질은 향긋한 향기를 가진 허브로, 토마토 요리에 자주 사용됩니다. 햇빛을 좋아하며, 다소 습한 환경에서 잘 자라는 식물입니다.', '/images/basil.jpg', 18, 30, 40, 60, 7),
+('방울토마토', '채소', '방울토마토는 작고 맛있는 과실이 특징인 채소로, 화분이나 정원에서 쉽게 재배할 수 있습니다. 햇빛을 좋아하며, 꾸준한 물 공급이 필요합니다.', '/images/cherry-tomato.jpg', 18, 30, 40, 70, 5),
+('히야신스', '꽃', '히야신스는 다양한 색상의 아름다운 꽃과 향기로 봄의 대표적인 꽃입니다. 온화한 기후를 선호하며, 화분이나 정원에서 재배할 수 있습니다.', '/images/hyacinth.jpg', 10, 25, 40, 60, 7),
+('해바라기', '꽃', '해바라기는 거대한 꽃과 높이가 특징인 식물로, 햇빛을 매우 좋아합니다. 정원이나 대형 화분에서 재배할 수 있으며, 씨앗이 간식이나 새의 먹이로 사용됩니다.', '/images/sunflower.jpg', 15, 30, 30, 60, 7),
+('아레카야자', '야자', '아레카야자는 열대 실내 장식용 식물로 유명하며, 큰 잎과 세련된 모습으로 인기가 많습니다.', '/images/areca-palm.jpg', 18, 27, 40, 60, 7),
+('파키라', '실내식물', '파키라는 견고하고 관리하기 쉬운 식물로, 두꺼운 줄기와 큰 둥글둥글한 잎이 특징입니다.', '/images/pachira.jpg', 15, 28, 40, 60, 10),
+('유칼립투스', '나무', '유칼립투스는 상쾌한 향기와 아름다운 잎 모양으로 많은 사랑을 받는 식물입니다. 특히 건조한 공간에서도 잘 자라기 때문에 인기가 높습니다.', '/images/eucalyptus.jpg', 10, 25, 30, 55, 14),
+('피나타', '실내식물', '피나타는 높은 곳에서 뻗어 나오는 날렵한 잎으로 장식성이 높은 식물입니다. 거실이나 베란다 같은 잘 통풍되는 장소에 두기 좋습니다.', '/images/pinnata.jpg', 15, 30, 40, 70, 12);
 
 -- User_Plants 테이블에 데이터 삽입
 INSERT INTO user_plants (user_id, plant_id, plant_nickname) VALUES
