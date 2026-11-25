@@ -1,43 +1,52 @@
 <template>
-  <div class="log-container">
-    <v-btn v-if="!dialog" class="add-log-btn" @click="dialog = !dialog">
-      일기 추가
-    </v-btn>
-    <transition name="slide-fade">
-      <v-card v-if="dialog" class="log-card">
-        <div class="add-log-body">
-          <v-card-text>
-            <UserPlants :userId="user.userId" @updated-userplant-id="updateUserPlantId" />
-            <v-text-field v-model="newLog.note" label="Note" required></v-text-field>
-            <v-switch
-              v-model="newLog.watered"
-              hide-details
-              label="물을 주었음"
-              color="primary"
-            ></v-switch>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="blue" @click="dialog = false">Cancel</v-btn>
-            <v-btn color="primary" @click="addLog">Add</v-btn>
-          </v-card-actions>
+  <div class="page">
+    <section class="section">
+      <div class="section-head">
+        <h3>일기</h3>
+        <span class="count">{{ logs.length }}</span>
+        <div class="actions">
+          <button v-if="!dialog" class="btn-primary add-log-btn" @click="dialog = !dialog"><v-icon size="18">mdi-pencil-outline</v-icon>일기 추가</button>
         </div>
-      </v-card>
-    </transition>
-    <v-card v-for="log in logs" :key="log.plantLogId" class="log-card" variant="outlined">
-      <div class="log-header">
-        <v-icon v-if="log.watered" color="indigo darken-4" large> mdi-water-check </v-icon>
-        <v-icon color="#DC143C" @click="deleteLog(log.plantLogId)"> mdi-delete </v-icon>
       </div>
-      <div class="log-body">
-        <v-card-text class="log-title" > 
-          <h5 style="color: green; font-weight: bold; cursor: pointer;" @click="openPlantDetailModal(log.userPlant.plant.plantId)">{{ log.userPlant.plantNickname }}({{ log.userPlant.plant ? log.userPlant.plant.plantName : '알 수 없는 식물' }})</h5>            {{ log.note }}
-        </v-card-text>
+
+      <transition name="slide-fade">
+        <div v-if="dialog" class="leafy-card add-log-card">
+          <h4>새 일기</h4>
+          <UserPlants :userId="user.userId" @updated-userplant-id="updateUserPlantId" />
+          <v-textarea v-model="newLog.note" label="오늘의 기록" rows="2" auto-grow variant="outlined" color="#2F6B4F" required></v-textarea>
+          <v-switch
+            v-model="newLog.watered"
+            hide-details
+            label="물을 주었음"
+            color="#2F6B4F"
+            inset
+          ></v-switch>
+          <div class="form-actions">
+            <v-btn variant="text" @click="dialog = false">취소</v-btn>
+            <v-btn color="#2F6B4F" variant="flat" @click="addLog">추가</v-btn>
+          </div>
+        </div>
+      </transition>
+
+      <div v-if="logs.length" class="log-list">
+        <article v-for="log in logs" :key="log.plantLogId" class="leafy-card log-card">
+          <div class="log-thumb">
+            <img v-if="plantImage(log.userPlant.plant)" :src="plantImage(log.userPlant.plant)" :alt="log.userPlant.plant.plantName">
+            <v-icon v-else size="28" class="thumb-icon">mdi-sprout-outline</v-icon>
+          </div>
+          <div class="log-body">
+            <div class="log-top">
+              <h5 class="log-plant" @click="openPlantDetail(log.userPlant.plant)">{{ log.userPlant.plantNickname }}({{ log.userPlant.plant ? log.userPlant.plant.plantName : '알 수 없는 식물' }})</h5>
+              <span class="log-date" :title="formatDate(log.logDate)">{{ relativeDay(log.logDate) }}</span>
+            </div>
+            <p class="log-note">{{ log.note }}</p>
+            <span v-if="log.watered" class="chip chip-water"><v-icon size="16">mdi-water-check</v-icon>물 줌</span>
+          </div>
+          <button class="delete-btn" title="삭제" @click="deleteLog(log.plantLogId)"><v-icon size="20">mdi-trash-can-outline</v-icon></button>
+        </article>
       </div>
-      <div class="log-footer">
-        <v-card-text>{{ log.logDate }}</v-card-text>
-      </div>
-    </v-card>
+      <p v-else-if="!dialog" class="empty">아직 작성한 일기가 없습니다.</p>
+    </section>
     <PlantDetailModal :isOpen="showPlantDetailModal" @update:isOpen="showPlantDetailModal = $event" :plantId="selectedPlantId" />
   </div>
 </template>
@@ -47,6 +56,8 @@ import api from '@/api/api';
 import PlantDetailModal from '@/components/modals/PlantDetailModal.vue';
 import UserPlants from '@/components/UserPlants.vue';
 import { useStore } from 'vuex';
+import { plantImage, loadPlantImages } from '@/utils/plantImages';
+import { formatDate, relativeDay, todayString } from '@/utils/date';
 
 export default {
   name: 'PlantlogList',
@@ -64,14 +75,14 @@ export default {
           userPlantId: ""
         },
         note: '',
-        logDate: new Date().toISOString().slice(0, 10),
+        logDate: todayString(),
         watered: false,
       },
       dialog: false,
       showPlantDetailModal: false,
       selectedPlantId: null,
     });
-    
+
     const user = computed(() => store.state.user);
 
     const fetchLogs = async () => {
@@ -93,7 +104,7 @@ export default {
         userPlant: {
           userPlantId: ""
         },
-        logDate: new Date().toISOString().slice(0, 10),
+        logDate: todayString(),
         watered: false,
       };
       await fetchLogs();
@@ -108,15 +119,17 @@ export default {
       await fetchLogs();
     };
 
-    const openPlantDetailModal = (plantId) => {
-      state.selectedPlantId = plantId;
+    const openPlantDetail = (plant) => {
+      if (!plant) return;
+      state.selectedPlantId = plant.plantId;
       state.showPlantDetailModal = true;
     };
-    
+
     const updateUserPlantId = (newPlantId) => {
       state.newLog.userPlant.userPlantId = newPlantId;
     };
 
+    loadPlantImages();
     fetchLogs();
 
     return {
@@ -125,101 +138,134 @@ export default {
       addLog,
       editLog,
       deleteLog,
-      openPlantDetailModal,
-      updateUserPlantId
+      openPlantDetail,
+      updateUserPlantId,
+      formatDate,
+      relativeDay,
+      plantImage,
     };
   },
 }
 </script>
 <style scoped>
-.log-container {
-  margin: 30px;
+.add-log-card {
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.add-log-card h4 {
+  margin: 0 0 12px;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.log-list {
   display: flex;
   flex-direction: column;
-  align-items: center;
-}
-
-.log-title {
-  font-size: 20px;
-  font-weight: bold;
-  padding: 20px;
-  border-bottom: 1px solid #e9ebee;
-}
-
-.log-actions {
-  display: flex;
-  justify-content: center;
-  padding: 20px;
+  gap: 12px;
 }
 
 .log-card {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 30px;
-  width: 800px;
-  max-width: 90%;
-  border-radius: 10px;
-  border-color: #d9d9d9;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 20px;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 14px;
 }
 
-.log-header {
+.log-thumb {
+  flex: 0 0 64px;
+  height: 64px;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: var(--leafy-green-soft);
+}
+
+.log-thumb {
   display: flex;
-  justify-content: flex-end;
-  width: 100%;
+  align-items: center;
+  justify-content: center;
 }
 
-.add-log-body {
-  justify-content: center;
+.thumb-icon {
+  color: var(--leafy-sage);
+}
+
+.log-thumb img {
   width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .log-body {
-  justify-content: center;
-  width: 100%;
-}
-
-.log-footer {
+  flex: 1;
+  min-width: 0;
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.log-top {
   width: 100%;
-  text-align: right;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
 }
 
-.add-log-btn {
-  width: 800px;
-  max-width: 90%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  bottom: 20px;
-  position: relative;
-  z-index: 1;
+.log-plant {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--leafy-green);
+  cursor: pointer;
 }
 
-.add-log-btn {
-  display: block;
-  font-size: 1rem;
-  font-weight: bold;
-  color: white;
-  background-color: #38a169;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center; 
+.log-plant:hover {
+  text-decoration: underline;
 }
 
-.slide-fade-enter-active {
-  transition: all 0.7s ease-out;
+.log-date {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--leafy-muted);
 }
 
+.log-note {
+  margin: 0;
+  font-size: 0.93rem;
+  line-height: 1.5;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: var(--leafy-muted);
+  border-radius: 8px;
+  padding: 6px;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  color: #B42318;
+  background-color: #FDECEA;
+}
+
+.slide-fade-enter-active,
 .slide-fade-leave-active {
-  transition: all 0.1s cubic-bezier(1, 0.5, 0.8, 1);
+  transition: all 0.2s ease;
 }
 
 .slide-fade-enter-from,
 .slide-fade-leave-to {
-  transform: translateY(-20px);
+  transform: translateY(-8px);
   opacity: 0;
 }
 </style>
