@@ -1,7 +1,7 @@
-#1. 테스트용 네트워크 생성
+# 1. Create a network for testing
 docker network create postgres
 
-#2. 프라이머리 노드 실행
+# 2. Start the primary node
 docker run -d \
   --name postgres-primary-0 \
   --network postgres \
@@ -19,7 +19,7 @@ docker run -d \
   -e REPMGR_PORT_NUMBER=5432 \
   devwikirepo/postgresql-repmgr:15
 
-#3. 스탠바이 노드 실행
+# 3. Start the standby node
 docker run -d \
   --name postgres-standby-1 \
   --network postgres \
@@ -37,18 +37,18 @@ docker run -d \
   -e REPMGR_PORT_NUMBER=5432 \
   devwikirepo/postgresql-repmgr:15
 
-# 4. SHELL1, SHELL2 각 컨테이너의 로그 확인
+# 4. Check the logs of each container in SHELL1 and SHELL2
 docker logs -f postgres-primary-0
 docker logs -f postgres-standby-1
 
-# 5. 프라이머리 노드에 테이블 생성 및 데이터 삽입 
+# 5. Create a table and insert data on the primary node 
 docker exec -it -e PGPASSWORD=mypassword postgres-primary-0 psql -U myuser -d mydb -c "CREATE TABLE sample (id SERIAL PRIMARY KEY, name VARCHAR(255));"
 docker exec -it -e PGPASSWORD=mypassword postgres-primary-0 psql -U myuser -d mydb -c "INSERT INTO sample (name) VALUES ('John'), ('Jane'), ('Alice');"
 
-#6. 스탠바이 노드에 데이터가 동기화되어 있는지 확인
+# 6. Check that the data has been replicated to the standby node
 docker exec -it -e PGPASSWORD=mypassword postgres-standby-1 psql -U myuser -d mydb -c "SELECT * FROM sample;"
 
-#7. 환경 정리
+# 7. Clean up
 docker rm -f postgres-primary-0 postgres-standby-1
 docker volume rm postgres_primary_data postgres_standby_data
 docker network rm postgres

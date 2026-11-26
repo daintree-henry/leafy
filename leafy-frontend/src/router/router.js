@@ -54,7 +54,7 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth) && !store.state.user) {
     next({ name: 'UserLogin' });
   } else if(to.name === "UserLogin" && store.state.user) {
-    //로그인 정보가 존재하는 상태에서 로그인 페이지 요청일 경우 메인 페이지로 리다이렉트
+    // If the user is already logged in and requests the login page, redirect to the main page
     next({ name: "HomePage" });
   } else {
     next();
