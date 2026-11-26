@@ -26,7 +26,7 @@
 import api from '@/api/api';
 import { mapState, mapActions } from "vuex";
 
-// 강의 실습용 계정 (leafy-postgresql/init/init.sql에 들어 있는 사용자)
+// Practice account for the course (a user defined in leafy-postgresql/init/init.sql)
 const DEMO_EMAIL = 'john123@qmail.com';
 const DEMO_PASSWORD = 'password123';
 

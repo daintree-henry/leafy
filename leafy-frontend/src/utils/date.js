@@ -1,4 +1,4 @@
-// 날짜 표시 도우미
+// Date display helpers
 
 // 'YYYY-MM-DD' → 'YYYY.MM.DD'
 export function formatDate(value) {
@@ -7,7 +7,7 @@ export function formatDate(value) {
   return `${year}.${month}.${day}`;
 }
 
-// 오늘 기준으로 '오늘', '어제', 'n일 전', 그보다 오래되면 날짜
+// Relative to today: '오늘' (today), '어제' (yesterday), 'n일 전' (n days ago), or the date if older
 export function relativeDay(value) {
   if (!value) return '';
   const today = new Date();
@@ -20,7 +20,7 @@ export function relativeDay(value) {
   return formatDate(value);
 }
 
-// 브라우저 시간대 기준 오늘 날짜 'YYYY-MM-DD'
+// Today's date in the browser's time zone, as 'YYYY-MM-DD'
 export function todayString() {
   const now = new Date();
   const month = String(now.getMonth() + 1).padStart(2, '0');
