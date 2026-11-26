@@ -1,28 +1,28 @@
-# 빌드 이미지로 OpenJDK 11 & Gradle을 지정
+# Use OpenJDK 11 & Gradle as the build image
 FROM gradle:7.6.1-jdk11 AS build
 
-# 소스코드를 복사할 작업 디렉토리를 생성
+# Create the working directory for the source code
 WORKDIR /app
 
-# 라이브러리 설치에 필요한 파일만 복사
+# Copy only the files needed to install the libraries
 COPY build.gradle settings.gradle ./
 
 RUN gradle dependencies --no-daemon
 
-# 호스트 머신의 소스코드를 작업 디렉토리로 복사
+# Copy the source code from the host machine into the working directory
 COPY . /app
 
-# Gradle 빌드를 실행하여 JAR 파일 생성
+# Run the Gradle build to create the JAR file
 RUN gradle clean build --no-daemon
 
-# 런타임 이미지로 OpenJDK 11-jre-slim 지정
-# openjdk 이미지가 Docker Hub에서 삭제되어 같은 Java 11 JRE인 eclipse-temurin으로 교체 (2026-11)
+# Use OpenJDK 11-jre-slim as the runtime image
+# The openjdk image was removed from Docker Hub, so it was replaced with eclipse-temurin, the same Java 11 JRE (2026-11)
 FROM eclipse-temurin:11-jre
 
-# 애플리케이션을 실행할 작업 디렉토리를 생성
+# Create the working directory for running the application
 WORKDIR /app
 
-# 빌드 이미지에서 생성된 JAR 파일을 런타임 이미지로 복사
+# Copy the JAR file built in the build image into the runtime image
 COPY --from=build /app/build/libs/*.jar /app/leafy.jar
 
 EXPOSE 8080 

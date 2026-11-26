@@ -110,7 +110,7 @@ body {
   min-height: 100vh;
 }
 
-/* 상단 바 */
+/* Top bar */
 .app-header {
   position: sticky;
   top: 0;
@@ -169,7 +169,7 @@ body {
   color: var(--leafy-muted);
 }
 
-/* 본문 */
+/* Main content */
 .router-view-wrapper {
   flex-grow: 1;
   width: 100%;

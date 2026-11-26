@@ -4,41 +4,41 @@ on:
   push:
     branches:
       - 08-cicd  
-      # 08-cicd 브랜치에 push될 때 워크플로우가 실행됩니다.
+      # The workflow runs when changes are pushed to the 08-cicd branch.
     paths:
       - 'leafy-frontend/**'
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest  
-    # 가장 최신의 Ubuntu 러너를 사용합니다.
+    # Use the latest Ubuntu runner.
 
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2  
-      # 현재 리포지토리를 체크아웃합니다.
+      # Check out the current repository.
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1  
-      # Docker Buildx를 설정합니다.
+      # Set up Docker Buildx.
 
     - name: Login to Docker Hub
       uses: docker/login-action@v1
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}  
-        # GitHub Secret에서 Docker Hub 사용자 이름을 가져옵니다.
+        # Read the Docker Hub username from a GitHub secret.
         password: ${{ secrets.DOCKERHUB_TOKEN }}     
-        # GitHub Secret에서 Docker Hub 액세스 토큰을 가져옵니다.
+        # Read the Docker Hub access token from a GitHub secret.
 
     - name: Build and Push
       uses: docker/build-push-action@v2
       with:
         context: ./leafy-frontend  
-        # Dockerfile이 있는 위치입니다.
+        # Directory that contains the Dockerfile.
         file: ./leafy-frontend/Dockerfile  
-        # Dockerfile의 경로입니다.
+        # Path to the Dockerfile.
         push: true  
-        # 이미지를 레지스트리에 푸시합니다.
+        # Push the image to the registry.
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/leafy-frontend:${{ github.sha }}  
         platforms: linux/amd64,linux/arm64
 
