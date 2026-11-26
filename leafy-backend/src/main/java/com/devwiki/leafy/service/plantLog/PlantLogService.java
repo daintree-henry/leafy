@@ -24,9 +24,9 @@ public class PlantLogService {
     private final UserPlantService userPlantService;
 
     /**
-     * 모든 식물 로그 조회
+     * Get all plant logs
      *
-     * @return 모든 식물 로그 리스트
+     * @return list of all plant logs
      */
     public List<PlantLogSimpleDto> getAllPlantLogs() {
         List<PlantLog> plantLogs = plantLogRepository.findAll();
@@ -34,9 +34,9 @@ public class PlantLogService {
     }
 
     /**
-     * 사용자의 모든 식물 로그 조회
+     * Get all plant logs of a user
      *
-     * @return 모든 식물 로그 리스트
+     * @return list of all plant logs
      */
     public List<PlantLogSimpleDto> getAllPlantLogsByUserId(Long userId) {
         List<PlantLog> plantLogs = plantLogRepository.findAllByUserPlant_User_UserId_OrderByLogDateDesc(userId);
@@ -44,10 +44,10 @@ public class PlantLogService {
     }
 
     /**
-     * 식물 로그 ID로 조회
+     * Get a plant log by ID
      *
-     * @param plantLogId 조회할 식물 로그 ID
-     * @return 조회된 식물 로그
+     * @param plantLogId ID of the plant log to look up
+     * @return the plant log found
      */
     public PlantLogSimpleDto getPlantLogById(Long plantLogId) {
         PlantLog plantLog = findPlantLogById(plantLogId);
@@ -55,10 +55,10 @@ public class PlantLogService {
     }
 
     /**
-     * 유저-식물에 대한 모든 로그 조회
+     * Get all logs for a user plant
      *
-     * @param userPlantId 유저-식물 ID
-     * @return 유저-식물에 대한 모든 로그 리스트
+     * @param userPlantId user plant ID
+     * @return list of all logs for the user plant
      */
     public List<PlantLogSimpleDto> getAllPlantLogsByUserPlantId(Long userPlantId) {
         List<PlantLog> plantLogs = plantLogRepository.findAllByUserPlant_UserPlantId_OrderByLogDateDesc(userPlantId);
@@ -66,32 +66,32 @@ public class PlantLogService {
     }
 
     /**
-     * 식물 로그 추가
+     * Add a plant log
      *
-     * @param plantLogDto 추가할 식물 로그
-     * @return 추가된 식물 로그
+     * @param plantLogDto plant log to add
+     * @return the added plant log
      */
     @Transactional
     public PlantLogSimpleDto addPlantLog(PlantLogDto plantLogDto) {
         plantLogDto.setCreatedAt(LocalDateTime.now());
         plantLogDto.setUpdatedAt(LocalDateTime.now());
 
-        //기존 UserPlant 정보가 조회하는 지 확인
+        // Check that the UserPlant exists
         UserPlantDto userPlantDto = userPlantService.getUserPlantById(plantLogDto.getUserPlant().getUserPlantId());
         plantLogDto.setUserPlant(userPlantDto);
 
-        //Entity 변환 및 저장
+        // Convert to an entity and save
         PlantLog plantLog = PlantLogMapper.toEntity(plantLogDto);
         plantLogRepository.save(plantLog);
         return PlantLogMapper.toSimpleDto(plantLog);
     }
 
     /**
-     * 식물 로그 수정
+     * Update a plant log
      *
-     * @param plantLogDto 수정할 식물 로그 정보
-     * @return 수정된 식물 로그 정보
-     * @throws ResourceNotFoundException 해당 식물 로그 정보가 존재하지 않을 경우 예외 발생
+     * @param plantLogDto plant log information to update
+     * @return the updated plant log
+     * @throws ResourceNotFoundException if the plant log does not exist
      */
     @Transactional
     public PlantLogSimpleDto updatePlantLog(Long plnatLogId, PlantLogDto plantLogDto) {
@@ -104,11 +104,11 @@ public class PlantLogService {
 
 
     /**
-     * 식물 로그 삭제
+     * Delete a plant log
      *
-     * @param plantLogId 수정할 식물 로그 정보
-     * @return 수정된 식물 로그 정보
-     * @throws ResourceNotFoundException 해당 식물 로그 정보가 존재하지 않을 경우 예외 발생
+     * @param plantLogId ID of the plant log to update
+     * @return the updated plant log
+     * @throws ResourceNotFoundException if the plant log does not exist
      */
     @Transactional
     public void deletePlantLog(Long plantLogId) {
@@ -117,7 +117,7 @@ public class PlantLogService {
     }
 
     /**
-     * 특정 id를 가진 식물 로그 조회
+     * Get the plant log with the given ID
      */
     private PlantLog findPlantLogById(Long plantLogId) {
         return plantLogRepository.findById(plantLogId)

@@ -21,9 +21,9 @@ public class PlantService {
     private final PlantRepository plantRepository;
 
     /**
-     * 모든 식물 정보 조회
+     * Get all plants
      *
-     * @return 모든 식물 정보
+     * @return all plants
      */
     public List<PlantDetailDto> getAllPlants() {
         return plantRepository.findAll()
@@ -34,10 +34,10 @@ public class PlantService {
     }
 
     /**
-     * 특정 식물 정보 조회
+     * Get a specific plant
      *
-     * @param plantId 조회할 식물 id
-     * @return 특정 식물 정보
+     * @param plantId ID of the plant to look up
+     * @return the specified plant
      */
     public PlantDetailDto getPlantById(Long plantId) {
         Plant plant = findPlantById(plantId);
@@ -45,10 +45,10 @@ public class PlantService {
     }
 
     /**
-     * 식물 정보 추가
+     * Add a plant
      *
-     * @param plantDetailDto 추가할 식물 정보
-     * @return 추가된 식물 정보
+     * @param plantDetailDto plant information to add
+     * @return the added plant
      */
     @Transactional
     public PlantDetailDto addPlant(PlantDetailDto plantDetailDto) {
@@ -60,11 +60,11 @@ public class PlantService {
     }
 
     /**
-     * 식물 정보 수정
+     * Update a plant
      *
-     * @param plantDetailDto 수정할 식물 정보
-     * @return 수정된 식물 정보
-     * @throws ResourceNotFoundException 해당 식물 정보가 존재하지 않을 경우 예외 발생
+     * @param plantDetailDto plant information to update
+     * @return the updated plant
+     * @throws ResourceNotFoundException if the plant does not exist
      */
     @Transactional
     public PlantDetailDto updatePlant(Long plantId, PlantDetailDto plantDetailDto) {
@@ -75,10 +75,10 @@ public class PlantService {
     }
 
     /**
-     * 식물 정보 삭제
+     * Delete a plant
      *
-     * @param plantId 삭제할 식물 id
-     * @throws ResourceNotFoundException 해당 식물 정보가 존재하지 않을 경우 예외 발생
+     * @param plantId ID of the plant to delete
+     * @throws ResourceNotFoundException if the plant does not exist
      */
     @Transactional
     public void deletePlant(Long plantId) {
@@ -87,11 +87,11 @@ public class PlantService {
     }
 
     /**
-     * 특정 id를 가진 식물 정보 조회
+     * Get the plant with the given ID
      *
-     * @param plantId 조회할 식물 id
-     * @return 조회된 식물 정보
-     * @throws ResourceNotFoundException 해당 식물 정보가 존재하지 않을 경우 예외 발생
+     * @param plantId ID of the plant to look up
+     * @return the plant found
+     * @throws ResourceNotFoundException if the plant does not exist
      */
     private Plant findPlantById(Long plantId) {
         return plantRepository.findById(plantId)
