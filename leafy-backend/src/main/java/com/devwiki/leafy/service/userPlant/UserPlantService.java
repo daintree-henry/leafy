@@ -32,11 +32,11 @@ public class UserPlantService {
     private final PlantLogRepository plantLogRepository;
 
     /**
-     * 특정 사용자가 가지고 있는 모든 식물 정보 조회
+     * Get all plants a specific user owns
      *
-     * @param userId 조회할 사용자 id
-     * @return 사용자가 가지고 있는 모든 식물 정보
-     * @throws ResourceNotFoundException 해당 사용자가 존재하지 않을 경우 예외 발생
+     * @param userId ID of the user to look up
+     * @return all plants the user owns
+     * @throws ResourceNotFoundException if the user does not exist
      */
     public List<UserPlantSimpleDto> getUserPlantsByUserIdWithWaterRequired(Long userId) {
         UserDto userDto = userService.getUserById(userId);
@@ -70,11 +70,11 @@ public class UserPlantService {
     }
 
     /**
-     * 사용자가 가지고 있는 특정 식물 정보 조회
+     * Get a specific plant the user owns
      *
-     * @param userPlantId 조회할 사용자 식물 id
-     * @return 사용자가 가지고 있는 특정 식물 정보
-     * @throws ResourceNotFoundException 해당 사용자 식물 정보가 존재하지 않을 경우 예외 발생
+     * @param userPlantId ID of the user plant to look up
+     * @return the specified plant the user owns
+     * @throws ResourceNotFoundException if the user plant does not exist
      */
     public UserPlantSimpleDto getSimpleUserPlantById(Long userPlantId) {
         UserPlant userPlant = userPlantRepository.findById(userPlantId)
@@ -83,11 +83,11 @@ public class UserPlantService {
     }
 
     /**
-     * 사용자가 가지고 있는 특정 식물 정보 조회
+     * Get a specific plant the user owns
      *
-     * @param userPlantId 조회할 사용자 식물 id
-     * @return 사용자가 가지고 있는 특정 식물 정보
-     * @throws ResourceNotFoundException 해당 사용자 식물 정보가 존재하지 않을 경우 예외 발생
+     * @param userPlantId ID of the user plant to look up
+     * @return the specified plant the user owns
+     * @throws ResourceNotFoundException if the user plant does not exist
      */
     public UserPlantDto getUserPlantById(Long userPlantId) {
         UserPlant userPlant = userPlantRepository.findById(userPlantId)
@@ -96,11 +96,11 @@ public class UserPlantService {
     }
 
     /**
-     * 사용자가 가지고 있는 특정 식물 정보 수정
+     * Update a specific plant the user owns
      *
-     * @param userPlantDto 수정할 사용자 식물 정보
-     * @return 수정된 사용자 식물 정보
-     * @throws ResourceNotFoundException 해당 사용자 식물 정보가 존재하지 않을 경우 예외 발생
+     * @param userPlantDto user plant information to update
+     * @return the updated user plant
+     * @throws ResourceNotFoundException if the user plant does not exist
      */
     @Transactional
     public UserPlantSimpleDto updateUserPlant(Long userPlantId, UserPlantDto userPlantDto) {
@@ -113,10 +113,10 @@ public class UserPlantService {
     }
 
     /**
-     * 사용자가 가지고 있는 특정 식물 정보 삭제
+     * Delete a specific plant the user owns
      *
-     * @param userPlantId 삭제할 사용자 식물 id
-     * @throws ResourceNotFoundException 해당 사용자 식물 정보가 존재하지 않을 경우 예외 발생
+     * @param userPlantId ID of the user plant to delete
+     * @throws ResourceNotFoundException if the user plant does not exist
      */
     @Transactional
     public void deleteUserPlant(Long userPlantId) {
@@ -126,25 +126,25 @@ public class UserPlantService {
     }
 
     /**
-     * 사용자가 가지고 있는 식물 정보 추가
+     * Add a plant the user owns
      *
-     * @param userPlantDto 추가할 사용자 식물 정보
-     * @return 추가된 사용자 식물 정보
-     * @throws ResourceNotFoundException 해당 사용자 또는 해당 식물 정보가 존재하지 않을 경우 예외 발생
+     * @param userPlantDto user plant information to add
+     * @return the added user plant
+     * @throws ResourceNotFoundException if the user or the plant does not exist
      */
     @Transactional
     public UserPlantSimpleDto addUserPlant(UserPlantDto userPlantDto) {
-        //생성 시간
+        // Creation time
         userPlantDto.setCreatedAt(LocalDateTime.now());
         userPlantDto.setUpdatedAt(LocalDateTime.now());
 
-        //사용자 및 식물 정보 조회 및 추가
+        // Look up the user and the plant, then add
         UserDto userDto = userService.getUserById(userPlantDto.getUser().getUserId());
         userPlantDto.setUser(userDto);
         PlantDetailDto plantDetailDto = plantService.getPlantById(userPlantDto.getPlant().getPlantId());
         userPlantDto.setPlant(plantDetailDto);
 
-        //사용자 식물 정보 추가
+        // Add the user plant
         UserPlant userPlant = new UserPlant(userPlantDto);
         userPlantRepository.save(userPlant);
 

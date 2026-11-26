@@ -35,7 +35,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 }
 
-// 실행 가능한 jar(bootJar)만 만든다. plain jar가 함께 생기면 Dockerfile의 *.jar 복사가 두 파일을 잡는다
+// Build only the executable jar (bootJar). If a plain jar is also built, the *.jar copy in the Dockerfile matches two files
 jar {
 	enabled = false
 }
