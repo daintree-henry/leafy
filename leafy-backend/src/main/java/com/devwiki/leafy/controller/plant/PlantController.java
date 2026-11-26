@@ -18,9 +18,9 @@ public class PlantController {
     private final PlantService plantService;
 
     /**
-     * 모든 식물 조회
+     * Get all plants
      *
-     * @return 모든 식물 리스트
+     * @return list of all plants
      */
     @GetMapping("")
     public ResponseEntity<List<PlantDetailDto>> getAllPlants() {
@@ -29,10 +29,10 @@ public class PlantController {
     }
 
     /**
-     * 식물 ID로 조회
+     * Get a plant by ID
      *
-     * @param plantId 조회할 식물 ID
-     * @return 조회된 식물
+     * @param plantId ID of the plant to look up
+     * @return the plant found
      */
     @GetMapping("/{plantId}")
     public ResponseEntity<PlantDetailDto> getPlantById(@PathVariable Long plantId) {
@@ -41,10 +41,10 @@ public class PlantController {
     }
 
     /**
-     * 식물 추가
+     * Add a plant
      *
-     * @param plantDetailDto 추가할 식물
-     * @return 추가된 식물
+     * @param plantDetailDto plant to add
+     * @return the added plant
      */
     @PostMapping("")
     public ResponseEntity<PlantDetailDto> addPlant(@Valid @RequestBody PlantDetailDto plantDetailDto) {
@@ -54,11 +54,11 @@ public class PlantController {
 
 
     /**
-     * 식물 수정
+     * Update a plant
      *
-     * @param plantId   수정할 식물 ID
-     * @param plantDetailDto  수정할 식물 정보
-     * @return 수정된 식물 정보
+     * @param plantId   ID of the plant to update
+     * @param plantDetailDto  plant information to update
+     * @return the updated plant
      */
     @PutMapping("/{plantId}")
     public ResponseEntity<PlantDetailDto> updatePlant(@PathVariable Long plantId, @RequestBody PlantDetailDto plantDetailDto) {
@@ -67,9 +67,9 @@ public class PlantController {
     }
 
     /**
-     * 식물 삭제
+     * Delete a plant
      *
-     * @param plantId 삭제할 식물 ID
+     * @param plantId ID of the plant to delete
      */
     @DeleteMapping("/{plantId}")
     public ResponseEntity<Void> deletePlant(@PathVariable Long plantId) {
