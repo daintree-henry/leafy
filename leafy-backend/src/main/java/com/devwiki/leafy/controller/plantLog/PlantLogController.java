@@ -20,9 +20,9 @@ public class PlantLogController {
     private final PlantLogService plantLogService;
 
     /**
-     * 모든 식물 로그 조회
+     * Get all plant logs
      *
-     * @return 모든 식물 로그 리스트
+     * @return list of all plant logs
      */
     @GetMapping("")
     public ResponseEntity<List<PlantLogSimpleDto>> getAllPlantLogs() {
@@ -31,9 +31,9 @@ public class PlantLogController {
     }
 
     /**
-     * 특정 사용자의 모든 식물 로그 조회
+     * Get all plant logs of a specific user
      *
-     * @return 모든 식물 로그 리스트
+     * @return list of all plant logs
      */
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<PlantLogSimpleDto>> getAllPlantLogsByUserId(@PathVariable Long userId) {
@@ -43,9 +43,9 @@ public class PlantLogController {
 
 
     /**
-     * 특정 사용자의 모든 식물 로그 조회(최근 5건)
+     * Get the plant logs of a specific user (latest 5)
      *
-     * @return 모든 식물 로그 리스트
+     * @return list of all plant logs
      */
     @GetMapping("/recent/user/{userId}")
     public ResponseEntity<List<PlantLogSimpleDto>> getAllPlantRecentLogsByUserId(@PathVariable Long userId) {
@@ -56,10 +56,10 @@ public class PlantLogController {
     }
 
     /**
-     * 식물 로그 ID로 조회
+     * Get a plant log by ID
      *
-     * @param plantLogId 조회할 식물 로그 ID
-     * @return 조회된 식물 로그
+     * @param plantLogId ID of the plant log to look up
+     * @return the plant log found
      */
     @GetMapping("/{plantLogId}")
     public ResponseEntity<PlantLogSimpleDto> getPlantLogById(@PathVariable Long plantLogId) {
@@ -68,10 +68,10 @@ public class PlantLogController {
     }
 
     /**
-     * 유저-식물에 대한 모든 로그 조회
+     * Get all logs for a user plant
      *
-     * @param userPlantId 유저-식물 ID
-     * @return 유저-식물에 대한 모든 로그 리스트
+     * @param userPlantId user plant ID
+     * @return list of all logs for the user plant
      */
     @GetMapping("/user-plants/{userPlantId}")
     public ResponseEntity<List<PlantLogSimpleDto>> getAllPlantLogsByUserPlantId(@PathVariable Long userPlantId) {
@@ -80,10 +80,10 @@ public class PlantLogController {
     }
 
     /**
-     * 식물 로그 추가
+     * Add a plant log
      *
-     * @param plantLogDto 추가할 식물 로그
-     * @return 추가된 식물 로그
+     * @param plantLogDto plant log to add
+     * @return the added plant log
      */
     @PostMapping("")
     public ResponseEntity<PlantLogSimpleDto> addPlantLog(@RequestBody @Valid PlantLogDto plantLogDto) {
@@ -92,11 +92,11 @@ public class PlantLogController {
     }
 
     /**
-     * 식물 로그 수정
+     * Update a plant log
      *
-     * @param plantLogId  수정할 식물 로그 Id
-     * @param plantLogDto 수정할 식물 로그 정보
-     * @return 수정된 식물 로그 정보
+     * @param plantLogId  ID of the plant log to update
+     * @param plantLogDto plant log information to update
+     * @return the updated plant log
      */
     @PutMapping("/{plantLogId}")
     public ResponseEntity<PlantLogSimpleDto> updatePlantLog(@PathVariable Long plantLogId, @RequestBody @Valid PlantLogDto plantLogDto) {
@@ -105,9 +105,9 @@ public class PlantLogController {
     }
 
     /**
-     * 식물 로그 삭제
+     * Delete a plant log
      *
-     * @param plantLogId 삭제할 식물 로그 ID
+     * @param plantLogId ID of the plant log to delete
      */
     @DeleteMapping("/{plantLogId}")
     public ResponseEntity<Void> deletePlantLog(@PathVariable Long plantLogId) {

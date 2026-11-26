@@ -21,9 +21,9 @@ public class UserController {
     private final UserService userService;
 
     /**
-     * 모든 사용자 조회
+     * Get all users
      *
-     * @return 모든 사용자 리스트
+     * @return list of all users
      */
     @GetMapping("")
     public ResponseEntity<List<UserResponseDto>> getAllUsers() {
@@ -32,10 +32,10 @@ public class UserController {
     }
 
     /**
-     * 사용자 ID로 조회
+     * Get a user by ID
      *
-     * @param userId 조회할 사용자 ID
-     * @return 조회된 사용자
+     * @param userId ID of the user to look up
+     * @return the user found
      */
     @GetMapping("/{userId}")
     public ResponseEntity<UserResponseDto> getUserById(@PathVariable Long userId) {
@@ -44,10 +44,10 @@ public class UserController {
     }
 
     /**
-     * 새로운 사용자 추가
+     * Add a new user
      *
-     * @param userRequestDto 추가할 사용자 정보
-     * @return 추가된 사용자 정보
+     * @param userRequestDto user information to add
+     * @return the added user
      */
     @PostMapping("")
     public ResponseEntity<UserResponseDto> addUser(@Valid @RequestBody UserRequestDto userRequestDto) {
@@ -56,10 +56,10 @@ public class UserController {
     }
 
     /**
-     * 사용자 정보 업데이트
+     * Update a user
      *
-     * @param userPutRequestDto 업데이트할 사용자 정보
-     * @return 업데이트된 사용자 정보
+     * @param userPutRequestDto user information to update
+     * @return the updated user
      */
     @PutMapping("/{userId}")
     public ResponseEntity<UserResponseDto> updateUser(@PathVariable Long userId, @Valid @RequestBody UserPutRequestDto userPutRequestDto) {
@@ -68,9 +68,9 @@ public class UserController {
     }
 
     /**
-     * 사용자 정보 삭제
+     * Delete a user
      *
-     * @param userId 삭제할 사용자 ID
+     * @param userId ID of the user to delete
      */
     @DeleteMapping("/{userId}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long userId) {
@@ -79,9 +79,9 @@ public class UserController {
     }
 
 //    /**
-//     * 현재 인증된 사용자 정보 조회
+//     * Get the currently authenticated user
 //     *
-//     * @return 인증된 사용자 정보
+//     * @return authenticated user information
 //     */
 //    @GetMapping("/current")
 //    public ResponseEntity<UserResponseDto> getCurrentUser() {
@@ -92,10 +92,10 @@ public class UserController {
 //    }
 
     /**
-     * 사용자 로그인
+     * User login
      *
-     * @param loginDto 로그인 정보
-     * @return 로그인한 사용자 정보
+     * @param loginDto login information
+     * @return logged-in user information
      */
     @PostMapping("/login")
     public ResponseEntity<UserResponseDto> login(@RequestBody LoginDto loginDto) {

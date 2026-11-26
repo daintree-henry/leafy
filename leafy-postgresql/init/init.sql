@@ -50,7 +50,7 @@ CREATE TABLE plant_logs (
     updated_at TIMESTAMP
 );
 
--- Users 테이블에 데이터 삽입
+-- Insert data into the Users table
 -- $2a$10$vYR4pPQqR/oZcUDZfXrahecEejQHY0kLkDB5s.FctPRMcEMh1PYhG = password123
 -- $2a$10$Vqx3VUuB8gy9NvtKHQARWOOYB2wG4wV2WXy1sdQHIoY8TivSHZ3sC = password456
 -- $2a$10$ke3IM6noeWfQtX6POjZHl.49gSolYbqfrSTIn8sOQubdwjP2IT94q = password789
@@ -76,7 +76,7 @@ INSERT INTO users (name, email, password, gender, birth_date) VALUES
 ('Tom', 'tom012@qmail.com', '$2a$10$ke3IM6noeWfQtX6POjZHl.49gSolYbqfrSTIn8sOQubdwjP2IT94q', 'M', '1987-08-03'),
 ('Sarah', 'sarah345@qmail.com', '$2a$10$ke3IM6noeWfQtX6POjZHl.49gSolYbqfrSTIn8sOQubdwjP2IT94q', 'F', '1984-03-09');
 
--- Plants 테이블에 데이터 삽입
+-- Insert data into the Plants table
 INSERT INTO plants (plant_name, plant_type, plant_desc, image_url, temperature_low, temperature_high, humidity_low, humidity_high, watering_interval)
 VALUES 
 ('아이비', '덩굴식물', '아이비는 빠르게 성장하는 인기 있는 덩굴식물로, 공기 정화 능력이 뛰어납니다. 벽이나 거치대에 올려두면 빠르게 뻗어나가 아름다운 모습을 연출합니다.', '/images/ivy.jpg', 12, 28, 40, 70, 7),
@@ -98,14 +98,14 @@ VALUES
 ('유칼립투스', '나무', '유칼립투스는 상쾌한 향기와 아름다운 잎 모양으로 많은 사랑을 받는 식물입니다. 특히 건조한 공간에서도 잘 자라기 때문에 인기가 높습니다.', '/images/eucalyptus.jpg', 10, 25, 30, 55, 14),
 ('피나타', '실내식물', '피나타는 높은 곳에서 뻗어 나오는 날렵한 잎으로 장식성이 높은 식물입니다. 거실이나 베란다 같은 잘 통풍되는 장소에 두기 좋습니다.', '/images/pinnata.jpg', 15, 30, 40, 70, 12);
 
--- User_Plants 테이블에 데이터 삽입
+-- Insert data into the User_Plants table
 INSERT INTO user_plants (user_id, plant_id, plant_nickname) VALUES
 (1, 1, '노을이'), (1, 2, '햇님'), (2, 1, '별빛'), (2, 4, '새벽'), (2, 6, '향기'), (3, 7, '구름'), (3, 9, '바람'), (4, 10, '무지개'), (4, 12, '햇살'), (5, 14, '노을'),
 (5, 15, '풀밭'), (6, 16, '물방울'), (6, 18,'풀풀이'), (7, 15, '뾰족이'), (8, 1, '여름'), (8, 3, '쑥쑥이'), (8, 5, '검정'), (9, 2, '커피'), (9, 6, '봄이'), (10, 4, '초록이'),
 (11, 7, '딸기'), (12, 8, '노랑'), (13, 11, '바다'), (14, 13, '우주'), (15, 17, '하양');
 
--- Plant_Logs 테이블에 데이터 삽입
--- 일기 날짜는 DB가 처음 만들어진 날을 기준으로 2일 전, 1일 전, 당일로 들어간다
+-- Insert data into the Plant_Logs table
+-- Diary dates are set to 2 days ago, 1 day ago, and today, relative to when the database is first created
 INSERT INTO plant_logs (user_plant_id, log_date, note, watered) VALUES
 (1, CURRENT_DATE - 2, '관리가 어려워서 죽었습니다', false),
 (1, CURRENT_DATE - 1, '새로운 아이비를 구입했습니다', true),
