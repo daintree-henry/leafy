@@ -19,10 +19,10 @@ public class UserPlantController {
     private final UserPlantService userPlantService;
 
     /**
-     * 사용자가 가지고 있는 모든 식물 정보 조회
+     * Get all plants the user owns
      *
-     * @param userId 조회할 사용자 id
-     * @return 사용자가 가지고 있는 모든 식물 정보
+     * @param userId ID of the user to look up
+     * @return all plants the user owns
      */
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<UserPlantSimpleDto>> getUserPlantsByUserId(@PathVariable Long userId) {
@@ -31,10 +31,10 @@ public class UserPlantController {
     }
 
     /**
-     * 사용자가 가지고 있는 특정 식물 정보 조회
+     * Get a specific plant the user owns
      *
-     * @param userPlantId 조회할 사용자 식물 id
-     * @return 사용자가 가지고 있는 특정 식물 정보
+     * @param userPlantId ID of the user plant to look up
+     * @return the specified plant the user owns
      */
     @GetMapping("/{userPlantId}")
     public ResponseEntity<UserPlantSimpleDto> getUserPlantById(@PathVariable Long userPlantId) {
@@ -43,10 +43,10 @@ public class UserPlantController {
     }
 
     /**
-     * 사용자가 가지고 있는 식물 정보 추가
+     * Add a plant the user owns
      *
-     * @param userPlantDto 추가할 사용자 식물 정보
-     * @return 추가된 사용자 식물 정보
+     * @param userPlantDto user plant information to add
+     * @return the added user plant
      */
     @PostMapping("")
     public ResponseEntity<UserPlantSimpleDto> addUserPlant(@RequestBody @Valid UserPlantDto userPlantDto) {
@@ -56,11 +56,11 @@ public class UserPlantController {
 
 
     /**
-     * 사용자가 가지고 있는 특정 식물 정보 수정
+     * Update a specific plant the user owns
      *
-     * @param userPlantId  수정할 사용자 식물 id
-     * @param userPlantDto 수정할 사용자 식물 정보
-     * @return 수정된 사용자 식물 정보
+     * @param userPlantId  ID of the user plant to update
+     * @param userPlantDto user plant information to update
+     * @return the updated user plant
      */
     @PutMapping("/{userPlantId}")
     public ResponseEntity<UserPlantSimpleDto> updateUserPlant(@PathVariable Long userPlantId, @RequestBody UserPlantDto userPlantDto) {
@@ -69,9 +69,9 @@ public class UserPlantController {
     }
 
     /**
-     * 사용자가 가지고 있는 특정 식물 정보 삭제
+     * Delete a specific plant the user owns
      *
-     * @param userPlantId 삭제할 사용자 식물 id
+     * @param userPlantId ID of the user plant to delete
      */
     @DeleteMapping("/{userPlantId}")
     public ResponseEntity<Void> deleteUserPlant(@PathVariable Long userPlantId) {
