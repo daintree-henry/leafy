@@ -20,9 +20,9 @@ public class UserService {
     private final BCryptPasswordEncoder passwordEncoder;
 
     /**
-     * 모든 사용자 조회
+     * Get all users
      *
-     * @return 모든 사용자 리스트
+     * @return list of all users
      */
     public List<UserResponseDto> getAllUsers() {
         List<User> userDtos = userRepository.findAll();
@@ -30,10 +30,10 @@ public class UserService {
     }
 
     /**
-     * 사용자 ID로 조회
+     * Get a user by ID
      *
-     * @param userId 조회할 사용자 ID
-     * @return 조회된 사용자
+     * @param userId ID of the user to look up
+     * @return the user found
      */
     public UserResponseDto getUserResponseById(Long userId) {
         User user = findUserById(userId);
@@ -41,10 +41,10 @@ public class UserService {
     }
 
     /**
-     * 사용자 ID로 조회, 내부 로직 전용
+     * Get a user by ID (for internal use only)
      *
-     * @param userId 조회할 사용자 ID
-     * @return 조회된 사용자
+     * @param userId ID of the user to look up
+     * @return the user found
      */
     public UserDto getUserById(Long userId) {
         User user = findUserById(userId);
@@ -53,26 +53,26 @@ public class UserService {
 
 
     /**
-     * 새로운 사용자를 생성합니다.
+     * Creates a new user.
      *
-     * @param userRequestDto 새로 생성할 사용자 정보
-     * @return 생성된 사용자 정보
+     * @param userRequestDto information for the new user
+     * @return the created user
      */
     public UserResponseDto createUser(UserRequestDto userRequestDto) {
         userRequestDto.setCreatedAt(LocalDateTime.now());
         userRequestDto.setUpdatedAt(LocalDateTime.now());
-        userRequestDto.setPassword(passwordEncoder.encode(userRequestDto.getPassword())); // 비밀번호 암호화
+        userRequestDto.setPassword(passwordEncoder.encode(userRequestDto.getPassword())); // Encrypt the password
         User user = new User(userRequestDto);
         userRepository.save(user);
         return UserMapper.toResponseDto(user);
     }
 
     /**
-     * 이메일과 비밀번호를 받아 사용자 정보를 조회합니다.
+     * Finds a user by email and password.
      *
-     * @param email    사용자 이메일
-     * @param password 사용자 비밀번호
-     * @return 조회된 사용자 정보
+     * @param email    user email
+     * @param password user password
+     * @return the user found
      */
     public UserResponseDto getUserByEmailAndPassword(String email, String password) {
         Optional<User> userOptional = userRepository.findByEmail(email);
@@ -86,16 +86,16 @@ public class UserService {
     }
 
     /**
-     * 사용자 정보를 업데이트합니다.
+     * Updates a user.
      *
-     * @param userPutRequestDto 업데이트할 사용자 정보
-     * @return 업데이트된 사용자 정보
+     * @param userPutRequestDto user information to update
+     * @return the updated user
      */
     public UserResponseDto updateUser(Long userId, UserPutRequestDto userPutRequestDto) {
         UserRequestDto userRequestDto = new UserRequestDto();
         userRequestDto.setName(userPutRequestDto.getName());
         userRequestDto.setUpdatedAt(LocalDateTime.now());
-        // 비밀번호 암호화
+        // Encrypt the password
         if (userPutRequestDto.getPassword() != null) {
             userRequestDto.setPassword(passwordEncoder.encode(userPutRequestDto.getPassword()));
         }
@@ -114,9 +114,9 @@ public class UserService {
 
 
     /**
-     * 사용자 정보를 삭제합니다.
+     * Deletes a user.
      *
-     * @param userId 삭제할 사용자 Id
+     * @param userId ID of the user to delete
      */
     public void deleteUser(Long userId) {
         User user = findUserById(userId);
@@ -124,7 +124,7 @@ public class UserService {
     }
 
     /**
-     * 특정 id를 가진 식물 로그 조회
+     * Get the plant log with the given ID
      */
     private User findUserById(Long userId) {
         return userRepository.findById(userId)
