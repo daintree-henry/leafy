@@ -27,7 +27,7 @@
         <h3>최근 일기</h3>
       </div>
       <div v-if="logs.length" class="card-grid">
-        <!-- 최근 일기 부분 -->
+        <!-- Recent diary section -->
         <article v-for="log in logs" :key="log.plantLogId" class="leafy-card log-card">
           <div class="log-top">
             <span class="log-date" :title="formatDate(log.logDate)">{{ relativeDay(log.logDate) }}</span>

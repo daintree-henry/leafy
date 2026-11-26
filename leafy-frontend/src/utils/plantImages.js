@@ -1,7 +1,7 @@
 import { reactive } from 'vue';
 import api from '@/api/api';
 
-// 식물 사진 주소 모음. 내 식물·일기 API에는 사진 주소가 없어서 전체 식물 목록에서 찾아 쓴다.
+// Plant image URLs. The my-plants and diary APIs do not include image URLs, so they are looked up from the full plant list.
 const imageByPlantId = reactive({});
 let loaded = false;
 

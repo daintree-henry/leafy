@@ -129,7 +129,7 @@ export default {
       plantNickname.value = '';
     };
 
-    // 바깥을 누르거나 ESC로 닫혀도 부모에게 알려서, 같은 식물을 다시 눌렀을 때 열리게 한다
+    // Tell the parent when the dialog closes by an outside click or ESC, so the same plant can be opened again
     watch(isDialogOpen, (newVal) => {
       if (!newVal && props.isOpen) {
         emit('update:isOpen', false);
